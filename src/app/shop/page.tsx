@@ -50,7 +50,11 @@ export default function ShopPage() {
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {featuredProducts.map((product) => (
             <article key={product.id} className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
-              <div className={`h-40 bg-gradient-to-br ${product.accent}`} />
+              {product.image ? (
+                <img src={product.image} alt={product.name} className="h-40 w-full object-cover" />
+              ) : (
+                <div className={`h-40 bg-gradient-to-br ${product.accent}`} />
+              )}
               <div className="space-y-4 p-5">
                 <div className="flex items-center justify-between gap-3">
                   <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600">

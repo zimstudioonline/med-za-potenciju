@@ -8,6 +8,7 @@ export type Product = {
   badge: string;
   description: string;
   accent: string;
+  image?: string;
 };
 
 export type BlogPost = {
@@ -76,6 +77,7 @@ export const featuredProducts: Product[] = [
     badge: "Med za potenciju",
     description: "Prirodni med sa biljnim ekstraktima za podršku vitalnosti i energije.",
     accent: "from-green-400 to-emerald-600",
+    image: "/med-za-potenciju-fortissimo.webp",
   },
 ];
 
