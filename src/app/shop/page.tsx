@@ -67,7 +67,11 @@ export default function ShopPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                     {product.category}
                   </p>
-                  <h3 className="mt-2 text-xl font-bold">{product.name}</h3>
+                  <h3 className="mt-2 text-xl font-bold">
+                    <Link href={`/shop/${product.slug}`} className="hover:underline">
+                      {product.name}
+                    </Link>
+                  </h3>
                 </div>
 
                 <p className="text-sm leading-6 text-slate-600">{product.description}</p>
