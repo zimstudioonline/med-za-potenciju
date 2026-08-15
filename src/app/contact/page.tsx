@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Footer } from "@/components/footer";
 
 export default function ContactPage() {
   return (
@@ -116,22 +117,24 @@ export default function ContactPage() {
             <div>
               <h3 className="font-semibold text-foreground">Email</h3>
               <p className="mt-2 text-muted-foreground">
-                <a href="mailto:info@vitavital.rs" className="hover:underline">
-                  info@vitavital.rs
+                <a href="mailto:kontakt@medzapotenciju.com" className="hover:underline text-primary">
+                  kontakt@medzapotenciju.com
                 </a>
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-foreground">Telefonski broj</h3>
               <p className="mt-2 text-muted-foreground">
-                <a href="tel:+381601234567" className="hover:underline">
-                  +381 60 123 4567
+                <a href="tel:+381633423800" className="hover:underline text-primary">
+                  +381 63 342 3800
                 </a>
               </p>
             </div>
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

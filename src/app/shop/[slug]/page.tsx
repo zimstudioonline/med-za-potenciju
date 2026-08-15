@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Product01 } from "@/components/sections/product-01";
 import { featuredProducts } from "@/data/catalog";
+import { Footer } from "@/components/footer";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -111,6 +112,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           ← Nazad na shop
         </Link>
       </section>
+
+      <Footer />
     </main>
   );
 }

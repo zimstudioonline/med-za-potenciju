@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { blogPosts } from "@/data/catalog";
+import { Footer } from "@/components/footer";
 
 export default function BlogPage() {
   return (
@@ -77,6 +78,8 @@ export default function BlogPage() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

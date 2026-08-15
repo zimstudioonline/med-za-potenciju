@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { featuredProducts } from "@/data/catalog";
+import { Footer } from "@/components/footer";
 
 export default function ShopPage() {
   return (
@@ -88,6 +89,8 @@ export default function ShopPage() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

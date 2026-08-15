@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Product01 } from "@/components/sections/product-01";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -88,6 +89,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
