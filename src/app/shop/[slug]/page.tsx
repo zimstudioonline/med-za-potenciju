@@ -38,6 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Link href="/">Početna</Link>
           <Link href="/shop">Shop</Link>
           <Link href="/blog">Blog</Link>
+          <Link href="/contact">Kontakt</Link>
         </nav>
         <Link
           href="/shop"

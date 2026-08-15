@@ -14,6 +14,7 @@ export default function ShopPage() {
             Shop
           </Link>
           <Link href="/blog">Blog</Link>
+          <Link href="/contact">Kontakt</Link>
         </nav>
         <Link
           href="/shop"

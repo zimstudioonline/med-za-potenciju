@@ -14,6 +14,7 @@ export default function BlogPage() {
           <Link href="/blog" className="text-slate-950">
             Blog
           </Link>
+          <Link href="/contact">Kontakt</Link>
         </nav>
         <Link
           href="/shop"
