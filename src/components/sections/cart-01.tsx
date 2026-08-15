@@ -340,15 +340,18 @@ export function Cart01({
                     )}
                   </dd>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="text-muted-foreground">
-                    {t.estimatedTax}{" "}
-                    <span className="tabular-nums">
-                      ({Math.round(taxRate * 100)}%)
-                    </span>
-                  </dt>
-                  <dd className="tabular-nums">{format(tax)}</dd>
-                </div>
+                {/* Hidden where tax is already included in the listed price. */}
+                {taxRate > 0 && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">
+                      {t.estimatedTax}{" "}
+                      <span className="tabular-nums">
+                        ({Math.round(taxRate * 100)}%)
+                      </span>
+                    </dt>
+                    <dd className="tabular-nums">{format(tax)}</dd>
+                  </div>
+                )}
               </dl>
 
               <Separator className="my-5" />

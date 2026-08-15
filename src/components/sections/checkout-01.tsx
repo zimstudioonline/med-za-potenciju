@@ -526,15 +526,18 @@ export function Checkout01({
                     {shipping === 0 ? t.free : formatMoney(shipping, currency)}
                   </dd>
                 </div>
-                <div className="flex items-center justify-between">
-                  <dt className="text-muted-foreground">
-                    {t.tax}{" "}
-                    <span className="text-muted-foreground/70 tabular-nums">
-                      · {Math.round(taxRate * 100)}%
-                    </span>
-                  </dt>
-                  <dd className="tabular-nums">{formatMoney(tax, currency)}</dd>
-                </div>
+                {/* Hidden where tax is already included in the listed price. */}
+                {taxRate > 0 && (
+                  <div className="flex items-center justify-between">
+                    <dt className="text-muted-foreground">
+                      {t.tax}{" "}
+                      <span className="text-muted-foreground/70 tabular-nums">
+                        · {Math.round(taxRate * 100)}%
+                      </span>
+                    </dt>
+                    <dd className="tabular-nums">{formatMoney(tax, currency)}</dd>
+                  </div>
+                )}
               </dl>
 
               <Separator className="my-5" />

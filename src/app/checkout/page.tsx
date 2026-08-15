@@ -23,17 +23,12 @@ export default function CheckoutPage() {
     },
   ];
 
+  // Matches the cart's shippingFee so the total does not change between pages.
   const deliveryOptions = [
     {
-      id: "standard",
-      name: "Standardna dostava",
-      eta: "3-5 radnih dana",
-      fee: 0,
-    },
-    {
-      id: "express",
-      name: "Ekspresna dostava",
-      eta: "1-2 radna dana",
+      id: "kurir",
+      name: "Kurirska služba",
+      eta: "Isporuka u roku od 24 časa, diskretno pakovanje",
       fee: 300,
     },
   ];
@@ -43,9 +38,17 @@ export default function CheckoutPage() {
       <Header />
 
       <Checkout01
+        as="h1"
+        eyebrow="Sigurno plaćanje"
+        title="Završite porudžbinu"
+        description="Proverite porudžbinu i unesite podatke za dostavu. Cene su u dinarima sa uračunatim PDV-om."
         items={cartItems}
         deliveryOptions={deliveryOptions}
         currency={product.currency}
+        taxRate={0}
+        submitLabel="Poruči"
+        secureNote="Podaci su šifrovani. Ne čuvamo podatke o vašoj kartici."
+        paymentMethods={["Visa", "Mastercard"]}
         labels={{
           contact: "Kontakt",
           shippingAddress: "Adresa za dostavu",
