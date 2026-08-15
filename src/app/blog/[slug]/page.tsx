@@ -1,32 +1,63 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogPosts } from "@/data/catalog";
+
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { blogPosts, findPost } from "@/data/catalog";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = findPost(slug);
+
+  if (!post) {
+    return { title: "Tekst nije pronađen" };
+  }
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      publishedTime: post.date,
+      authors: [post.author],
+      images: post.image ? [post.image] : undefined,
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const post = findPost(slug);
 
   if (!post) {
     notFound();
   }
 
   return (
-    <main className="min-h-screen bg-[#f8fafc] text-slate-900">
-      <header className="mx-auto flex max-w-4xl items-center justify-between px-6 py-6">
-        <Link href="/" className="text-2xl font-black tracking-tight">
-          VitaVital
-        </Link>
-        <Link href="/blog" className="text-sm font-semibold text-slate-700 hover:text-slate-950">
-          ← Nazad na blog
-        </Link>
-      </header>
+    <main className="min-h-screen bg-background text-foreground">
+      <Header />
 
       <article className="mx-auto max-w-4xl px-6 pb-20 pt-8">
-        <div className="mb-6 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+        <Link
+          href="/blog"
+          className="text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+        >
+          ← Nazad na blog
+        </Link>
+
+        <div className="mb-6 mt-8 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           <span>{post.category}</span>
           <span>•</span>
           <span>{post.date}</span>
@@ -35,20 +66,39 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         <h1 className="text-4xl font-black tracking-tight md:text-5xl">{post.title}</h1>
-        <p className="mt-4 text-lg text-slate-600">Autor: {post.author}</p>
+        <p className="mt-4 text-lg text-muted-foreground">Autor: {post.author}</p>
 
-        <div className="mt-10 rounded-[28px] bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 p-[1px] shadow-lg shadow-emerald-200/50">
-          <div className="h-56 rounded-[27px] bg-slate-900/80" />
-        </div>
+        {post.image && (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="mt-10 h-64 w-full rounded-[28px] border border-border object-cover md:h-80"
+          />
+        )}
 
-        <div className="prose prose-slate mt-10 max-w-none text-lg leading-8 text-slate-700">
+        <div className="mt-10 max-w-none text-lg leading-8">
           {post.content.map((paragraph) => (
-            <p key={paragraph} className="mb-5">
+            <p key={paragraph} className="mb-5 text-muted-foreground">
               {paragraph}
             </p>
           ))}
         </div>
+
+        <div className="mt-12 rounded-2xl border border-border bg-muted/40 p-6">
+          <h2 className="text-lg font-bold">Q4You Fortissimo</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Med sa biljnim ekstraktima u kesicama od 7 g. Pogledajte dostupna pakovanja i cene.
+          </p>
+          <Link
+            href="/shop"
+            className="mt-4 inline-flex rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+          >
+            Pogledaj proizvode
+          </Link>
+        </div>
       </article>
+
+      <Footer />
     </main>
   );
 }

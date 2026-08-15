@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { formatMoney } from "@/lib/money"
 import { fadeUp, stagger, viewport } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
@@ -155,13 +156,6 @@ const defaultDeliveryOptions: CheckoutDeliveryOption[] = [
   { id: "express", name: "Express", eta: "1–2 business days", fee: 14 },
   { id: "pickup", name: "Store pickup", eta: "Ready today", fee: 0 },
 ]
-
-function formatMoney(value: number, currency: string) {
-  return `${currency}${value.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`
-}
 
 function ThumbMock({ item }: { item: CheckoutItem }) {
   if (item.image) {

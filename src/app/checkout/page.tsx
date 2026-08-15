@@ -1,15 +1,25 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+
 import { Checkout01 } from "@/components/sections/checkout-01";
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { featuredProducts } from "@/data/catalog";
+
+export const metadata: Metadata = {
+  title: "Plaćanje",
+  description: "Unesite podatke za dostavu i završite porudžbinu.",
+  robots: { index: false },
+};
 
 export default function CheckoutPage() {
-  // Mock cart items
+  // Placeholder line — replaced once the cart keeps real state.
+  const product = featuredProducts[0];
   const cartItems = [
     {
-      name: "Q4You Fortissimo",
+      name: product.name,
       qty: 1,
-      price: 1960,
-      image: "/med-za-potenciju-fortissimo.webp",
+      price: product.price,
+      image: product.image,
     },
   ];
 
@@ -30,28 +40,12 @@ export default function CheckoutPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/med-za-potenciju-com-logo.webp" alt="Med za potenciju" className="h-12 w-auto" />
-        </Link>
-        <nav className="hidden gap-6 text-sm font-medium text-muted-foreground md:flex">
-          <Link href="/">Početna</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Kontakt</Link>
-        </nav>
-        <Link
-          href="/cart"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-        >
-          Korpa
-        </Link>
-      </header>
+      <Header />
 
       <Checkout01
         items={cartItems}
         deliveryOptions={deliveryOptions}
-        currency="din"
+        currency={product.currency}
         labels={{
           contact: "Kontakt",
           shippingAddress: "Adresa za dostavu",
@@ -67,7 +61,7 @@ export default function CheckoutPage() {
           postalCodeLabel: "Poštanski broj",
           countryLabel: "Država",
           cardNumberLabel: "Broj kartice",
-          expiryLabel: "Ročnost",
+          expiryLabel: "Važi do",
           cvcLabel: "CVC",
           emailPlaceholder: "vasa@email.com",
           firstNamePlaceholder: "Vaše ime",

@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { formatMoney } from "@/lib/money"
 import { fadeUp, stagger, viewport } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
@@ -161,11 +162,7 @@ export function Cart01({
   const [promo, setPromo] = React.useState("")
 
   const format = React.useCallback(
-    (value: number) =>
-      `${currency}${value.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`,
+    (value: number) => formatMoney(value, currency),
     [currency]
   )
 

@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 
+/** Mirrors the categories actually used by posts in the catalog. */
+const FOOTER_TOPICS = ["Zdravlje", "Rutina", "Nutricionizam", "Proizvodi"];
+
 export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -16,33 +19,25 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-xl font-black text-white">Med za potenciju</h3>
             <p className="text-sm leading-relaxed text-slate-400">
-              Vaš vodič ka zdravijlem i kvalitetnijim životu — naučno potvrđljeni saveti o zdravlju, ishrani i zdravim navikama.
+              Vaš vodič ka zdravijem i kvalitetnijem životu — saveti o zdravlju, ishrani i navikama
+              koje utiču na energiju i vitalnost.
             </p>
           </div>
 
           {/* Kategorije */}
           <div className="space-y-4">
-            <h4 className="font-bold text-white">Kategorije</h4>
+            <h4 className="font-bold text-white">Teme</h4>
             <nav className="space-y-2 text-sm">
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Detoksikacija
-              </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Energija i vitalnost
-              </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Imunitet
-              </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Ishrana
-              </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Prirodno zdravlje
-              </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Svesni život
-              </Link>
-              <Link href="#" className="inline-flex items-center gap-1 text-primary hover:underline">
+              {FOOTER_TOPICS.map((topic) => (
+                <Link
+                  key={topic}
+                  href="/blog"
+                  className="block text-slate-400 transition hover:text-white"
+                >
+                  {topic}
+                </Link>
+              ))}
+              <Link href="/blog" className="inline-flex items-center gap-1 text-primary hover:underline">
                 Sve teme →
               </Link>
             </nav>
@@ -61,8 +56,8 @@ export function Footer() {
               <Link href="/shop" className="block text-slate-400 transition hover:text-white">
                 Shop
               </Link>
-              <Link href="#" className="block text-slate-400 transition hover:text-white">
-                Teme
+              <Link href="/cart" className="block text-slate-400 transition hover:text-white">
+                Korpa
               </Link>
               <Link href="/contact" className="block text-slate-400 transition hover:text-white">
                 Kontakt

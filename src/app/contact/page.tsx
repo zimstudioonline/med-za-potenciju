@@ -1,28 +1,19 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+
+export const metadata: Metadata = {
+  title: "Kontakt",
+  description:
+    "Pitanja o proizvodu, porudžbini ili dostavi? Pišite na kontakt@medzapotenciju.com ili nas pozovite na +381 63 342 3800, svakog dana od 10 do 20 časova.",
+  alternates: { canonical: "/contact" },
+};
 
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/med-za-potenciju-com-logo.webp" alt="Med za potenciju" className="h-12 w-auto" />
-        </Link>
-        <nav className="hidden gap-6 text-sm font-medium text-muted-foreground md:flex">
-          <Link href="/">Početna</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact" className="text-foreground">
-            Kontakt
-          </Link>
-        </nav>
-        <Link
-          href="/shop"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-        >
-          Kupi sada
-        </Link>
-      </header>
+      <Header />
 
       <section className="mx-auto max-w-2xl px-6 py-16">
         <div className="space-y-8">
@@ -31,7 +22,7 @@ export default function ContactPage() {
               Kontaktirajte nas
             </h1>
             <p className="mt-3 text-lg text-muted-foreground">
-              Imamo pitanja? Slobodno nam se obratite. Odgovoriće vam u roku od 24 časa.
+              Imate pitanje? Slobodno nam se obratite — odgovorićemo vam u roku od 24 časa.
             </p>
           </div>
 
@@ -45,7 +36,7 @@ export default function ContactPage() {
                 id="name"
                 name="name"
                 required
-                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="Vaše ime"
               />
             </div>
@@ -59,7 +50,7 @@ export default function ContactPage() {
                 id="email"
                 name="email"
                 required
-                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="vasa@email.com"
               />
             </div>
@@ -72,7 +63,7 @@ export default function ContactPage() {
                 type="tel"
                 id="phone"
                 name="phone"
-                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="+381 60 123 4567"
               />
             </div>
@@ -86,8 +77,8 @@ export default function ContactPage() {
                 id="subject"
                 name="subject"
                 required
-                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Vaša poruka"
+                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Tema poruke"
               />
             </div>
 
@@ -100,7 +91,7 @@ export default function ContactPage() {
                 name="message"
                 required
                 rows={5}
-                className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 placeholder="Napišite vašu poruku..."
               />
             </div>
@@ -113,7 +104,7 @@ export default function ContactPage() {
             </button>
           </form>
 
-          <div className="grid gap-6 md:grid-cols-2 border-t border-slate-200 pt-8">
+          <div className="grid gap-6 border-t border-border pt-8 md:grid-cols-2">
             <div>
               <h3 className="font-semibold text-foreground">Email</h3>
               <p className="mt-2 text-muted-foreground">

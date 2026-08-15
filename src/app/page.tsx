@@ -1,86 +1,77 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Product01 } from "@/components/sections/product-01";
+
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { Product01 } from "@/components/sections/product-01";
+import { featuredProducts } from "@/data/catalog";
+import { formatMoney } from "@/lib/money";
+
+export const metadata: Metadata = {
+  title: "Q4You Fortissimo — med za potenciju i vitalnost",
+  description:
+    "Q4You Fortissimo: med sa đumbirom, ženšenom, epimediumom i matičnim mlečem u kesicama od 7 g. Pakovanje od 7 kesica za 1.960 din, diskretna dostava u 24 časa.",
+  alternates: { canonical: "/" },
+};
+
+/** The 7-sachet pack is the hero offer; the smaller packs are cross-sold below. */
+const heroProduct = featuredProducts[0];
+const otherPacks = featuredProducts.slice(1);
+
+const SELLING_POINTS = [
+  [
+    "Praktične kesice od 7 g",
+    "Sadržaj se iscedi direktno u usta ili na kašičicu — bez merenja i bez pripreme.",
+  ],
+  [
+    "Biljni sastojci i cvetni med",
+    "Đumbir, galanga, epimedium, ginko, ženšen, maka i matični mleč u medenoj bazi.",
+  ],
+  [
+    "Diskretna dostava u 24 časa",
+    "Neutralno pakovanje, porudžbine telefonom svakog dana od 10 do 20 časova.",
+  ],
+];
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/med-za-potenciju-com-logo.webp" alt="Med za potenciju" className="h-12 w-auto" />
-        </Link>
-        <nav className="hidden gap-6 text-sm font-medium text-muted-foreground md:flex">
-          <Link href="/">Početna</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Kontakt</Link>
-        </nav>
-        <Link
-          href="/cart"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-        >
-          Korpa
-        </Link>
-      </header>
+      <Header />
 
       <Product01
-        brand="VitaVital"
-        title="PureBalance Pro"
-        price={52}
-        compareAt={78}
-        currency="€"
-        rating={4.9}
-        reviewCount={214}
-        description="Napredna formula za svakodnevnu energiju, fokus i balans bez previše dodataka. Ovaj blend podržava imunitet, vitalnost i samopouzdanje kroz celodnevni ritam."
-        badge="Bestseller"
+        brand="Q4You"
+        title={heroProduct.name}
+        price={heroProduct.price}
+        compareAt={heroProduct.compareAt}
+        currency={heroProduct.currency}
+        rating={heroProduct.rating}
+        reviewCount={heroProduct.reviewCount}
+        description="Dodatak ishrani na bazi cvetnog meda i biljnih ekstrakata, namenjen odraslima koji žele da podrže energiju, vitalnost i seksualnu želju. Jedna kesica najmanje sat vremena pre aktivnosti, na prazan stomak."
+        badge={heroProduct.badge}
         addToCartLabel="Dodaj u korpu"
         buyNowLabel="Kupi odmah"
         as="h1"
         images={[
-          {
-            src: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&w=1200&auto=format&fit=crop",
-            alt: "PureBalance Pro bottle front",
-          },
-          {
-            src: "https://images.unsplash.com/photo-1523398002811-999ca8dec4f6?q=80&w=1200&auto=format&fit=crop",
-            alt: "Wellness supplement close up",
-          },
-          {
-            src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1200&auto=format&fit=crop",
-            alt: "Lifestyle shot of natural wellness product",
-          },
-          {
-            src: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?q=80&w=1200&auto=format&fit=crop",
-            alt: "Product on a desk with natural lighting",
-          },
+          { src: heroProduct.image!, alt: `${heroProduct.name} — pakovanje` },
         ]}
-        colors={[
-          { name: "Forest", className: "bg-gradient-to-br from-emerald-600 via-emerald-500 to-lime-300" },
-          { name: "Sand", className: "bg-gradient-to-br from-amber-200 via-stone-100 to-orange-300" },
-          { name: "Midnight", className: "bg-gradient-to-br from-slate-900 via-slate-700 to-slate-500" },
-          { name: "Rose", className: "bg-gradient-to-br from-pink-300 via-rose-200 to-red-300" },
-        ]}
-        sizes={["S", "M", "L", "XL"]}
+        colors={[]}
+        sizes={[]}
         labels={{
-          color: "Boja",
-          size: "Veličina",
-          sizeGuide: "Pogledaj veličinu",
           reviews: "recenzija",
-          inStock: "Na stanju, spremno za slanje",
+          inStock: "Na stanju, šaljemo u roku od 24 časa",
           save: "Ušteda {percent}%",
-          freeShipping: "Besplatna dostava",
-          returns: "30 dana za povrat",
+          freeShipping: "Diskretna dostava",
+          returns: "Podrška 10–20h svakog dana",
           secureCheckout: "Sigurno plaćanje",
+          decreaseQuantity: "Umanji količinu",
+          increaseQuantity: "Uvećaj količinu",
+          addToWishlist: "Dodaj na listu želja",
         }}
       />
 
       <section className="mx-auto max-w-6xl px-6 py-10">
         <div className="grid gap-6 md:grid-cols-3">
-          {[
-            ["Praktični proizvodi", "Dizajnirani za svakodnevnu rutinu i realan efekat."],
-            ["Naučno zasnovani saveti", "Blog i preporuke za bolji san, fokus i opštu energiju."],
-            ["Bez zbrke", "Jednostavna komunikacija, transparentni sastojci i kvalitet."],
-          ].map(([title, text]) => (
+          {SELLING_POINTS.map(([title, text]) => (
             <div key={title} className="rounded-[28px] border border-border bg-card p-6 shadow-sm">
               <div className="mb-4 h-12 w-12 rounded-full bg-primary/10" />
               <h3 className="text-xl font-bold">{title}</h3>
@@ -88,6 +79,42 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        <h2 className="text-3xl font-black tracking-tight">Ostala pakovanja</h2>
+        <p className="mt-3 max-w-xl text-muted-foreground">
+          Želite prvo da isprobate? Dostupne su i manje količine.
+        </p>
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          {otherPacks.map((pack) => (
+            <article
+              key={pack.id}
+              className="flex items-center justify-between gap-4 rounded-[28px] border border-border bg-card p-6 shadow-sm"
+            >
+              <div>
+                <h3 className="text-lg font-bold">
+                  <Link href={`/shop/${pack.slug}`} className="hover:underline">
+                    {pack.name}
+                  </Link>
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">{pack.packSize}</p>
+              </div>
+              <p className="shrink-0 text-xl font-black tabular-nums">
+                {formatMoney(pack.price, pack.currency)}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <p className="rounded-2xl border border-border bg-muted/40 p-6 text-sm leading-6 text-muted-foreground">
+          Dodaci ishrani nisu zamena za uravnoteženu ishranu, pregled ili lečenje. Proizvod nije
+          namenjen osobama mlađim od 18 godina, trudnicama i dojiljama. Ako imate alergiju na neki
+          od sastojaka ili koristite terapiju, posavetujte se sa lekarom ili farmaceutom.
+        </p>
       </section>
 
       <Footer />

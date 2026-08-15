@@ -15,6 +15,7 @@ import {
 
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
+import { formatMoney } from "@/lib/money"
 import { fadeUp, stagger, viewport } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 
@@ -172,6 +173,8 @@ export function Product01({
             )}
           </div>
 
+          {/* Thumb strip — pointless with a single photo */}
+          {thumbCount > 1 && (
           <div className="grid grid-cols-4 gap-3">
             {Array.from({ length: thumbCount }).map((_, i) => {
               const img = hasImages ? images[i] : undefined
@@ -205,6 +208,7 @@ export function Product01({
               )
             })}
           </div>
+          )}
         </motion.div>
 
         {/* RIGHT — info */}
@@ -249,13 +253,11 @@ export function Product01({
           {/* Price */}
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <span className="text-2xl font-semibold tabular-nums">
-              {currency}
-              {price}
+              {formatMoney(price, currency)}
             </span>
             {compareAt && compareAt > price && (
               <span className="text-muted-foreground line-through tabular-nums">
-                {currency}
-                {compareAt}
+                {formatMoney(compareAt, currency)}
               </span>
             )}
             {savePercent > 0 && (
@@ -269,7 +271,8 @@ export function Product01({
             {description}
           </p>
 
-          {/* Color selector */}
+          {/* Color selector — hidden for products without variants */}
+          {resolvedColors.length > 0 && (
           <div className="mt-8">
             <div className="flex items-baseline justify-between">
               <span className="text-sm font-medium">{t.color}</span>
@@ -300,8 +303,10 @@ export function Product01({
               })}
             </div>
           </div>
+          )}
 
-          {/* Size selector */}
+          {/* Size selector — hidden for products without sizes */}
+          {sizes.length > 0 && (
           <div className="mt-6">
             <div className="flex items-baseline justify-between">
               <span className="text-sm font-medium">{t.size}</span>
@@ -334,6 +339,7 @@ export function Product01({
               })}
             </div>
           </div>
+          )}
 
           {/* Quantity + actions */}
           <div className="mt-8 flex flex-col gap-4">

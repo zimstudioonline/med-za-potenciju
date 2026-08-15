@@ -1,47 +1,37 @@
-import Link from "next/link";
-import { Cart01 } from "@/components/sections/cart-01";
+import type { Metadata } from "next";
+
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { Cart01 } from "@/components/sections/cart-01";
+import { featuredProducts } from "@/data/catalog";
+
+export const metadata: Metadata = {
+  title: "Korpa",
+  description: "Pregled artikala u vašoj korpi pre nastavka na plaćanje.",
+  robots: { index: false },
+};
 
 export default function CartPage() {
-  // Mock cart items
+  // Placeholder line — replaced once the cart keeps real state.
+  const product = featuredProducts[0];
   const cartItems = [
     {
-      id: "q4you-fortissimo",
-      name: "Q4You Fortissimo",
-      variant: "Energija i vitalnost",
-      price: 1960,
+      id: product.slug,
+      name: product.name,
+      variant: product.packSize,
+      price: product.price,
       qty: 1,
-      image: "/med-za-potenciju-fortissimo.webp",
+      image: product.image,
     },
   ];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <img
-            src="/med-za-potenciju-com-logo.webp"
-            alt="Med za potenciju"
-            className="h-12 w-auto"
-          />
-        </Link>
-        <nav className="hidden gap-6 text-sm font-medium text-muted-foreground md:flex">
-          <Link href="/">Početna</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Kontakt</Link>
-        </nav>
-        <Link
-          href="/checkout"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-        >
-          Plaćanje
-        </Link>
-      </header>
+      <Header cta={{ href: "/checkout", label: "Plaćanje" }} />
 
       <Cart01
         items={cartItems}
-        currency="din"
+        currency={product.currency}
         freeShippingThreshold={5000}
         shippingFee={300}
         taxRate={0}
@@ -53,23 +43,23 @@ export default function CartPage() {
           itemSingular: "proizvod",
           itemPlural: "proizvoda",
           continueShopping: "Nastavi kupovinu",
-          emptyMessage: "Vasa korpa je prazna.",
-          startShopping: "Pocni kupovinu",
+          emptyMessage: "Vaša korpa je prazna.",
+          startShopping: "Počni kupovinu",
           each: "kom",
-          orderSummary: "Pregled narudzbine",
+          orderSummary: "Pregled narudžbine",
           subtotal: "Zbir",
           shipping: "Dostava",
           free: "Besplatno",
           estimatedTax: "Procenjen porez",
           total: "Ukupno",
-          promoLabel: "Kod promocije",
-          promoPlaceholder: "Unesi kod",
+          promoLabel: "Promo kod",
+          promoPlaceholder: "Unesite kod",
           promoApply: "Primeni",
-          checkout: "Nastavi na placanje",
-          trustLine: "Sigurno i bezb sifrovano placanje",
+          checkout: "Nastavi na plaćanje",
+          trustLine: "Sigurno i šifrovano plaćanje",
           removeItem: "Ukloni {name} iz korpe",
-          decreaseQty: "Smanji kolicinu {name}",
-          increaseQty: "Povecaj kolicinu {name}",
+          decreaseQty: "Smanji količinu — {name}",
+          increaseQty: "Povećaj količinu — {name}",
         }}
       />
 
