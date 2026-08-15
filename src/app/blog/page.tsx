@@ -6,7 +6,7 @@ export default function BlogPage() {
     <main className="min-h-screen bg-[#f8fafc] text-slate-900">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Med za potenciju" className="h-12 w-auto" />
+          <img src="/med-za-potenciju-com-logo.webp" alt="Med za potenciju" className="h-12 w-auto" />
         </Link>
         <nav className="hidden gap-6 text-sm font-medium text-slate-600 md:flex">
           <Link href="/">Početna</Link>
