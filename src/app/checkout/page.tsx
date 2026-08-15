@@ -41,10 +41,10 @@ export default function CheckoutPage() {
           <Link href="/contact">Kontakt</Link>
         </nav>
         <Link
-          href="/shop"
+        <Link href="/cart"
           className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
         >
-          Kupi sada
+          Korpa
         </Link>
       </header>
 

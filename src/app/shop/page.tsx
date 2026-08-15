@@ -80,7 +80,7 @@ export default function ShopPage() {
 
                 <div className="flex items-center justify-between pt-2">
                   <p className="text-2xl font-black">€{product.price}</p>
-                  <Link href="/checkout" className="rounded-full bg-slate-900 px-6 py-1 text-sm font-semibold text-white transition hover:bg-slate-700">
+                  <Link href="/cart" className="rounded-full bg-slate-900 px-6 py-1 text-sm font-semibold text-white transition hover:bg-slate-700">
                     Dodaj u korpu
                   </Link>
                 </div>
