@@ -16,9 +16,11 @@ export type BlogPost = {
   title: string;
   excerpt: string;
   category: string;
+  categoryColor?: string;
   date: string;
   readTime: string;
   author: string;
+  image?: string;
   content: string[];
 };
 
@@ -88,9 +90,11 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Veza između kvaliteta sna, hormona i seksualne energije je jača nego što mnogi pretpostavljaju.",
     category: "Zdravlje",
+    categoryColor: "bg-emerald-500",
     date: "12. avgust 2026.",
     readTime: "4 min čitanja",
     author: "Dr. Maja Petrović",
+    image: "https://images.unsplash.com/photo-1513722032602-daca6f5e4a7d?q=80&w=800&auto=format&fit=crop",
     content: [
       "Kvalitetan san utiva na hormonalnu ravnotežu, nivo stresa i opštu energiju. U praksi, ljudi koji spavaju nedovoljno često imaju niži libido i veću umor, što dodatno utiče na seksualnu funkciju.",
       "Tokom noći telo reguliše kortizol, testosteron i leptin. Ako je san fragmentiran, ometa se balans koji podržava energiju, raspoloženje i seksualnu želju.",
@@ -103,9 +107,11 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Mali navike mogu imati veliki uticaj na nivo energije, stres i seksualni wellness.",
     category: "Rutina",
+    categoryColor: "bg-amber-500",
     date: "4. avgust 2026.",
     readTime: "6 min čitanja",
     author: "Ana Kovačević",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop",
     content: [
       "Jedna od najčešćih grešaka je preskakanje doručka. Bez stabilne energije ujutru, telo kasnije pređe u status stresa i umora.",
       "Druga je previše kofeina kasnije tokom dana, što poremeti san i dovodi do ciklusa umora i iscrpljenosti.",
@@ -118,9 +124,11 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Ponekad je nedostatak magnezijuma, cinka ili vitamina D značajniji faktor od same preopterećenosti.",
     category: "Nutricionizam",
+    categoryColor: "bg-lime-500",
     date: "21. jul 2026.",
     readTime: "5 min čitanja",
     author: "Marko Ilić",
+    image: "https://images.unsplash.com/photo-1631217266806-68d27e03a26f?q=80&w=800&auto=format&fit=crop",
     content: [
       "U svakodnevnom životu mnogi pojedinci zanemaruju da odabir prehrane utiče direktno na hormonale i seksualnu energiju.",
       "Magnezijum podržava mišićnu relaksaciju i regulaciju stresa, cink pomaže u održavanju normalne funkcije reproduktivnog sistema, a vitamin D doprinosi kako opštem, tako i metaboličkom wellnessu.",
@@ -133,9 +141,11 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Prirodna kombinacija meda i biljnih ekstrakata u praktičnim kesicama za podršku energiji i intimnom wellness-u.",
     category: "Proizvodi",
+    categoryColor: "bg-orange-500",
     date: "15. august 2026.",
     readTime: "8 min čitanja",
     author: "Zdravstveni savetnik",
+    image: "/med-za-potenciju-fortissimo.webp",
     content: [
       "Q4You Fortissimo je dodatak ishrani na bazi meda i biljnih sastojaka, namenjen odraslim osobama koje žele da podrže svoju energiju, vitalnost i seksualnu želju. Proizvod dolazi u praktičnim kesicama od po 7 grama, što omogućava jednostavno doziranje i lako nošenje.",
       "Formula sadrži kombinaciju različitih biljnih ekstrakata i začina: đumbir, galanga, epimedium, kopriva, ginko, različite vrste ženšena, cimet, maka, seme bundeve, seme kole, pol polen, rogač, ovas, kao i liofilizirano matično mleč. Svi ti elementi se kombinuju sa cvetnim medom i glukoznim sirupom.",

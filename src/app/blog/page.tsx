@@ -25,38 +25,57 @@ export default function BlogPage() {
       </header>
 
       <section className="mx-auto max-w-6xl px-6 pb-16 pt-10">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Blog</p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight md:text-5xl">Saveti za energiju, san i seksualnu vitalnost</h1>
+        <h1 className="text-4xl font-black tracking-tight md:text-5xl">Blog</h1>
         <p className="mt-4 max-w-2xl text-lg text-slate-600">
-          Uvek praktični saveti koji pomažu da svakodnevno osećate više energije, ravnoteže i samopouzdanja.
+          Svi tekstovi na jednom mestu — pretražite po temama ili prelistajte najnovije.
         </p>
       </section>
 
-      <section className="mx-auto max-w-6xl space-y-6 px-6 pb-20">
-        {blogPosts.map((post) => (
-          <article key={post.slug} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-            <div className="mb-4 flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              <span>{post.category}</span>
-              <span>•</span>
-              <span>{post.date}</span>
-              <span>•</span>
-              <span>{post.readTime}</span>
-            </div>
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {blogPosts.map((post) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`}>
+              <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                {/* Image */}
+                {post.image && (
+                  <div className="relative h-48 w-full overflow-hidden bg-slate-200">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="size-full object-cover transition-transform group-hover:scale-105"
+                    />
+                  </div>
+                )}
 
-            <h2 className="text-2xl font-black tracking-tight md:text-3xl">{post.title}</h2>
-            <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">{post.excerpt}</p>
+                {/* Content */}
+                <div className="space-y-3 p-5">
+                  {/* Category badge */}
+                  <div className="inline-flex">
+                    <span 
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide text-white ${post.categoryColor || 'bg-slate-400'}`}
+                    >
+                      {post.category}
+                    </span>
+                  </div>
 
-            <div className="mt-6 flex items-center justify-between gap-4">
-              <p className="text-sm text-slate-500">Autor: {post.author}</p>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
-              >
-                Pročitaj članak
-              </Link>
-            </div>
-          </article>
-        ))}
+                  {/* Date */}
+                  <p className="text-xs font-medium text-slate-500">{post.date}</p>
+
+                  {/* Title */}
+                  <h3 className="text-lg font-bold tracking-tight text-slate-900 group-hover:underline">
+                    {post.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="text-sm leading-6 text-slate-600">{post.excerpt}</p>
+
+                  {/* Read time */}
+                  <p className="pt-2 text-xs text-slate-500">{post.readTime}</p>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
       </section>
     </main>
   );
