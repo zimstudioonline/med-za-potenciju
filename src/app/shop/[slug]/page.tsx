@@ -61,10 +61,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         buyNowLabel="Kupi odmah"
         as="h1"
         images={productImages}
-        colors={[
-          { name: "Standard", className: `bg-gradient-to-br ${product.accent}` },
-        ]}
-        sizes={["1 porcija", "3 porcije", "7 porcija"]}
+        colors={[]}
+        sizes={[]}
         labels={{
           color: "Varijanta",
           size: "Pakovanje",
