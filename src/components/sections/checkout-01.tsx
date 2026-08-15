@@ -36,6 +36,7 @@ export type Checkout01Labels = {
   payment: string
   /** Field labels. */
   emailLabel: string
+  phoneLabel: string
   firstNameLabel: string
   lastNameLabel: string
   addressLabel: string
@@ -49,6 +50,7 @@ export type Checkout01Labels = {
   cvcLabel: string
   /** Field placeholders. */
   emailPlaceholder: string
+  phonePlaceholder: string
   firstNamePlaceholder: string
   lastNamePlaceholder: string
   addressPlaceholder: string
@@ -61,6 +63,10 @@ export type Checkout01Labels = {
   cvcPlaceholder: string
   /** Payment reassurance line inside the card panel. */
   paymentNote: string
+  /** Cash-on-delivery panel, used when `paymentMode` is "cod". */
+  codTitle: string
+  codNote: string
+  codBadge: string
   /** Summary panel. */
   orderSummary: string
   qty: string
@@ -77,6 +83,7 @@ export const DEFAULT_CHECKOUT01_LABELS: Checkout01Labels = {
   deliveryMethod: "Delivery method",
   payment: "Payment",
   emailLabel: "Email address",
+  phoneLabel: "Phone number",
   firstNameLabel: "First name",
   lastNameLabel: "Last name",
   addressLabel: "Address",
@@ -89,6 +96,7 @@ export const DEFAULT_CHECKOUT01_LABELS: Checkout01Labels = {
   expiryLabel: "Expiry",
   cvcLabel: "CVC",
   emailPlaceholder: "you@example.com",
+  phonePlaceholder: "+44 7700 900000",
   firstNamePlaceholder: "Ada",
   lastNamePlaceholder: "Lovelace",
   addressPlaceholder: "12 Marchmont Street",
@@ -100,6 +108,9 @@ export const DEFAULT_CHECKOUT01_LABELS: Checkout01Labels = {
   expiryPlaceholder: "MM / YY",
   cvcPlaceholder: "123",
   paymentNote: "Payments are encrypted and processed securely.",
+  codTitle: "Cash on delivery",
+  codNote: "You pay the courier in cash when the parcel arrives. No card details are collected.",
+  codBadge: "Cash on delivery",
   orderSummary: "Order summary",
   qty: "Qty",
   subtotal: "Subtotal",
@@ -122,6 +133,8 @@ export type Checkout01Props = {
   submitLabel?: string
   secureNote?: string
   paymentMethods?: string[]
+  /** "cod" swaps the card fields for a cash-on-delivery notice. */
+  paymentMode?: "card" | "cod"
   /** Heading element — use "h1" when this is the page's main heading. */
   as?: "h1" | "h2"
   className?: string
@@ -188,6 +201,7 @@ export function Checkout01({
   submitLabel = "Place order",
   secureNote = "Encrypted and secured. We never store full card details.",
   paymentMethods = ["Visa", "Mastercard", "Amex", "Apple Pay"],
+  paymentMode = "card",
   as: Heading = "h2",
   className,
 }: Checkout01Props) {
@@ -268,16 +282,30 @@ export function Checkout01({
                 {stepIndex(1)}
                 {t.contact}
               </legend>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="checkout-email">{t.emailLabel}</Label>
-                <Input
-                  id="checkout-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder={t.emailPlaceholder}
-                />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="checkout-email">{t.emailLabel}</Label>
+                  <Input
+                    id="checkout-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder={t.emailPlaceholder}
+                  />
+                </div>
+                {/* The courier needs a reachable number, doubly so for cash on delivery. */}
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="checkout-phone">{t.phoneLabel}</Label>
+                  <Input
+                    id="checkout-phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    required
+                    placeholder={t.phonePlaceholder}
+                  />
+                </div>
               </div>
             </motion.fieldset>
 
@@ -433,6 +461,17 @@ export function Checkout01({
                 {stepIndex(4)}
                 {t.payment}
               </legend>
+              {paymentMode === "cod" ? (
+                <div className="rounded-lg border bg-card p-6">
+                  <p className="flex items-center gap-2 text-sm font-medium">
+                    <Truck className="size-4 text-primary" aria-hidden />
+                    {t.codTitle}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {t.codNote}
+                  </p>
+                </div>
+              ) : (
               <div className="rounded-lg border bg-card p-6">
                 <p className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Lock className="size-3.5 text-primary" aria-hidden />
@@ -474,6 +513,7 @@ export function Checkout01({
                   </div>
                 </div>
               </div>
+              )}
             </motion.fieldset>
           </motion.form>
 
@@ -567,15 +607,26 @@ export function Checkout01({
               </p>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <CreditCard className="size-4 text-muted-foreground" aria-hidden />
-                {paymentMethods.map((method) => (
-                  <span
-                    key={method}
-                    className="rounded-md border bg-muted px-2 py-1 text-xs text-muted-foreground"
-                  >
-                    {method}
-                  </span>
-                ))}
+                {paymentMode === "cod" ? (
+                  <>
+                    <Truck className="size-4 text-muted-foreground" aria-hidden />
+                    <span className="rounded-md border bg-muted px-2 py-1 text-xs text-muted-foreground">
+                      {t.codBadge}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="size-4 text-muted-foreground" aria-hidden />
+                    {paymentMethods.map((method) => (
+                      <span
+                        key={method}
+                        className="rounded-md border bg-muted px-2 py-1 text-xs text-muted-foreground"
+                      >
+                        {method}
+                      </span>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </motion.aside>

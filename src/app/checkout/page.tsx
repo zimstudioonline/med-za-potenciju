@@ -4,6 +4,7 @@ import { Checkout01 } from "@/components/sections/checkout-01";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { featuredProducts } from "@/data/catalog";
+import { SHIPPING_ETA, SHIPPING_FEE } from "@/lib/shipping";
 
 export const metadata: Metadata = {
   title: "Plaćanje",
@@ -26,10 +27,10 @@ export default function CheckoutPage() {
   // Matches the cart's shippingFee so the total does not change between pages.
   const deliveryOptions = [
     {
-      id: "kurir",
-      name: "Kurirska služba",
-      eta: "Isporuka u roku od 24 časa, diskretno pakovanje",
-      fee: 300,
+      id: "brza-posta",
+      name: "Brza pošta — plaćanje pouzećem",
+      eta: SHIPPING_ETA,
+      fee: SHIPPING_FEE,
     },
   ];
 
@@ -41,20 +42,21 @@ export default function CheckoutPage() {
         as="h1"
         eyebrow="Sigurno plaćanje"
         title="Završite porudžbinu"
-        description="Proverite porudžbinu i unesite podatke za dostavu. Cene su u dinarima sa uračunatim PDV-om."
+        description="Proverite porudžbinu i unesite podatke za dostavu. Plaćate kuriru pri preuzimanju — kartica nije potrebna."
         items={cartItems}
         deliveryOptions={deliveryOptions}
         currency={product.currency}
         taxRate={0}
+        paymentMode="cod"
         submitLabel="Poruči"
-        secureNote="Podaci su šifrovani. Ne čuvamo podatke o vašoj kartici."
-        paymentMethods={["Visa", "Mastercard"]}
+        secureNote="Ne prikupljamo i ne čuvamo podatke o karticama. Paket dolazi u diskretnom pakovanju."
         labels={{
           contact: "Kontakt",
           shippingAddress: "Adresa za dostavu",
           deliveryMethod: "Način dostave",
           payment: "Plaćanje",
           emailLabel: "Email adresa",
+          phoneLabel: "Telefon",
           firstNameLabel: "Ime",
           lastNameLabel: "Prezime",
           addressLabel: "Adresa",
@@ -63,10 +65,12 @@ export default function CheckoutPage() {
           cityLabel: "Grad",
           postalCodeLabel: "Poštanski broj",
           countryLabel: "Država",
-          cardNumberLabel: "Broj kartice",
-          expiryLabel: "Važi do",
-          cvcLabel: "CVC",
           emailPlaceholder: "vasa@email.com",
+          phonePlaceholder: "+381 6X XXX XXXX",
+          codTitle: "Plaćanje pouzećem",
+          codNote:
+            "Plaćate kuriru brze pošte u trenutku preuzimanja paketa. Ne unosite podatke o kartici i ne plaćate ništa unapred.",
+          codBadge: "Pouzećem",
           firstNamePlaceholder: "Vaše ime",
           lastNamePlaceholder: "Vaše prezime",
           addressPlaceholder: "Ulica i broj",
@@ -74,13 +78,9 @@ export default function CheckoutPage() {
           cityPlaceholder: "Beograd",
           postalCodePlaceholder: "11000",
           countryPlaceholder: "Srbija",
-          cardNumberPlaceholder: "1234 5678 9012 3456",
-          expiryPlaceholder: "MM/YY",
-          cvcPlaceholder: "123",
-          paymentNote: "Vaše plaćanje je zaštićeno i sigurno",
           orderSummary: "Pregled narudžbine",
           qty: "Količina",
-          subtotal: "Zbir",
+          subtotal: "Međuzbir",
           shipping: "Dostava",
           tax: "Porez",
           total: "Ukupno",

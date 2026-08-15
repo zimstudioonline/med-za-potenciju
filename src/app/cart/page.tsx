@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Cart01 } from "@/components/sections/cart-01";
 import { featuredProducts } from "@/data/catalog";
+import { FREE_SHIPPING_THRESHOLD, SHIPPING_FEE } from "@/lib/shipping";
 
 export const metadata: Metadata = {
   title: "Korpa",
@@ -32,8 +33,8 @@ export default function CartPage() {
       <Cart01
         items={cartItems}
         currency={product.currency}
-        freeShippingThreshold={5000}
-        shippingFee={300}
+        freeShippingThreshold={FREE_SHIPPING_THRESHOLD}
+        shippingFee={SHIPPING_FEE}
         taxRate={0}
         checkoutHref="/checkout"
         continueHref="/shop"
