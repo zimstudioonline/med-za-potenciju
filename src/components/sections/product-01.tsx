@@ -221,7 +221,8 @@ export function Product01({
             {title}
           </Heading>
 
-          {/* Rating */}
+          {/* Rating — hidden until there are real reviews to show */}
+          {reviewCount > 0 && (
           <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
             <span className="flex items-center" aria-hidden>
               {Array.from({ length: 5 }).map((_, i) => (
@@ -249,6 +250,7 @@ export function Product01({
               {reviewCount} {t.reviews}
             </a>
           </div>
+          )}
 
           {/* Price */}
           <div className="mt-5 flex flex-wrap items-center gap-3">

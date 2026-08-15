@@ -56,8 +56,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         price={product.price}
         compareAt={product.compareAt}
         currency={product.currency}
-        rating={product.rating}
-        reviewCount={product.reviewCount}
+        reviewCount={0}
         description={product.description}
         badge={product.badge}
         addToCartLabel="Dodaj u korpu"
@@ -95,9 +94,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
             <div className="rounded-lg border border-border p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-                Ocena
+                Plaćanje
               </p>
-              <p className="mt-2 text-lg font-bold">★ {product.rating} / 5.0</p>
+              <p className="mt-2 text-lg font-bold">Pouzećem</p>
             </div>
             <div className="rounded-lg border border-border p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.1em] text-muted-foreground">

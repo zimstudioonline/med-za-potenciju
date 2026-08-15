@@ -59,7 +59,6 @@ export default function ShopPage() {
                   <span className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
                     {product.badge}
                   </span>
-                  <span className="text-sm font-medium text-amber-500">★ {product.rating}</span>
                 </div>
 
                 <div>

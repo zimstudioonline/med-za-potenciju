@@ -12,8 +12,8 @@ export type Product = {
   compareAt?: number;
   /** What the customer actually receives. */
   packSize: string;
-  rating: number;
-  reviewCount: number;
+  /** Number of sachets — drives the "cheapest per sachet" comparison. */
+  sachets: number;
   badge: string;
   description: string;
   accent: string;
@@ -45,9 +45,8 @@ export const featuredProducts: Product[] = [
     currency: DEFAULT_CURRENCY,
     compareAt: SINGLE_SACHET_PRICE * 7,
     packSize: "7 kesica × 7 g (49 g)",
-    rating: 4.9,
-    reviewCount: 187,
-    badge: "Najprodavanije",
+    sachets: 7,
+    badge: "Najveća ušteda",
     description:
       "Standardno pakovanje meda sa biljnim ekstraktima — dovoljno za sedam upotreba, uz najnižu cenu po kesici.",
     accent: "from-amber-400 to-orange-600",
@@ -62,9 +61,8 @@ export const featuredProducts: Product[] = [
     currency: DEFAULT_CURRENCY,
     compareAt: SINGLE_SACHET_PRICE * 3,
     packSize: "3 kesice × 7 g (21 g)",
-    rating: 4.8,
-    reviewCount: 94,
-    badge: "Najbolji odnos cene",
+    sachets: 3,
+    badge: "Srednje pakovanje",
     description:
       "Srednje pakovanje za one koji žele da isprobaju proizvod kroz nekoliko upotreba pre većeg pakovanja.",
     accent: "from-amber-300 to-orange-500",
@@ -78,8 +76,7 @@ export const featuredProducts: Product[] = [
     price: SINGLE_SACHET_PRICE,
     currency: DEFAULT_CURRENCY,
     packSize: "1 kesica × 7 g",
-    rating: 4.7,
-    reviewCount: 41,
+    sachets: 1,
     badge: "Za prvo isprobavanje",
     description:
       "Pojedinačna kesica — najjednostavniji način da isprobate proizvod bez obavezivanja na celo pakovanje.",
