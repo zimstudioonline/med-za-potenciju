@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { Product01 } from "@/components/sections/product-01";
 import { featuredProducts } from "@/data/catalog";
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const product = featuredProducts.find((p) => p.slug === params.slug);
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = featuredProducts.find((p) => p.slug === slug);
 
   if (!product) {
     notFound();
