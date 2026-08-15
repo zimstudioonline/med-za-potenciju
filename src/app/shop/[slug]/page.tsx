@@ -30,9 +30,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <Link href="/" className="text-2xl font-black tracking-tight">
-          VitaVital
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link href="/" className="flex items-center gap-2">
+          <img src="/logo.png" alt="Med za potenciju" className="h-12 w-auto" />
         </Link>
         <nav className="hidden gap-6 text-sm font-medium text-muted-foreground md:flex">
           <Link href="/">Početna</Link>
