@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Prirodna kombinacija meda i biljnih ekstrakata u praktičnim kesicama za podršku energiji i intimnom wellness-u.",
     category: "Proizvodi",
-    date: "15. август 2026.",
+    date: "15. august 2026.",
     readTime: "8 min čitanja",
     author: "Zdravstveni savetnik",
     content: [
