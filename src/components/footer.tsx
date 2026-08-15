@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 /** Mirrors the categories actually used by posts in the catalog. */
-const FOOTER_TOPICS = ["Zdravlje", "Rutina", "Nutricionizam", "Proizvodi"];
+const FOOTER_CATEGORIES = ["Zdravlje", "Rutina", "Nutricionizam", "Proizvodi"];
 
 export function Footer() {
   const scrollToTop = () => {
@@ -26,19 +26,19 @@ export function Footer() {
 
           {/* Kategorije */}
           <div className="space-y-4">
-            <h4 className="font-bold text-white">Teme</h4>
+            <h4 className="font-bold text-white">Kategorije</h4>
             <nav className="space-y-2 text-sm">
-              {FOOTER_TOPICS.map((topic) => (
+              {FOOTER_CATEGORIES.map((category) => (
                 <Link
-                  key={topic}
+                  key={category}
                   href="/blog"
                   className="block text-slate-400 transition hover:text-white"
                 >
-                  {topic}
+                  {category}
                 </Link>
               ))}
               <Link href="/blog" className="inline-flex items-center gap-1 text-primary hover:underline">
-                Sve teme →
+                Sve kategorije →
               </Link>
             </nav>
           </div>
