@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { AddToCart } from "@/components/add-to-cart";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { featuredProducts } from "@/data/catalog";
@@ -78,12 +79,7 @@ export default function ShopPage() {
                   <p className="text-2xl font-black tabular-nums">
                     {formatMoney(product.price, product.currency)}
                   </p>
-                  <Link
-                    href={`/shop/${product.slug}`}
-                    className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
-                  >
-                    Pogledaj
-                  </Link>
+                  <AddToCart slug={product.slug} />
                 </div>
               </div>
             </article>

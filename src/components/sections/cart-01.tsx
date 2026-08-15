@@ -92,6 +92,12 @@ export type Cart01Props = {
   shippingFee?: number
   /** Applied to the subtotal for the estimated-tax row. */
   taxRate?: number
+  /**
+   * Supply both callbacks to make the section controlled — quantity and removal
+   * are then handled by the caller instead of local state.
+   */
+  onQtyChange?: (id: string, qty: number) => void
+  onRemove?: (id: string) => void
   /** Checkout button destination. */
   checkoutHref?: string
   /** Continue-shopping link destination. */
@@ -149,6 +155,8 @@ export function Cart01({
   freeShippingThreshold = 250,
   shippingFee = 12,
   taxRate = 0.08,
+  onQtyChange,
+  onRemove,
   checkoutHref = "#",
   continueHref = "#",
   as: Heading = "h2",
@@ -158,25 +166,43 @@ export function Cart01({
     () => ({ ...DEFAULT_CART01_LABELS, ...labels }),
     [labels]
   )
-  const [lines, setLines] = React.useState<CartItem[]>(items)
+  const [internalLines, setInternalLines] = React.useState<CartItem[]>(items)
   const [promo, setPromo] = React.useState("")
+
+  // With callbacks supplied the caller owns the cart; without them the section
+  // keeps its own state so it still works as a standalone demo.
+  const isControlled = Boolean(onQtyChange && onRemove)
+  const lines = isControlled ? items : internalLines
 
   const format = React.useCallback(
     (value: number) => formatMoney(value, currency),
     [currency]
   )
 
-  const setQty = React.useCallback((id: string, next: number) => {
-    setLines((prev) =>
-      prev.map((line) =>
-        line.id === id ? { ...line, qty: Math.max(1, next) } : line
+  const setQty = React.useCallback(
+    (id: string, next: number) => {
+      const qty = Math.max(1, next)
+      if (onQtyChange) {
+        onQtyChange(id, qty)
+        return
+      }
+      setInternalLines((prev) =>
+        prev.map((line) => (line.id === id ? { ...line, qty } : line))
       )
-    )
-  }, [])
+    },
+    [onQtyChange]
+  )
 
-  const removeLine = React.useCallback((id: string) => {
-    setLines((prev) => prev.filter((line) => line.id !== id))
-  }, [])
+  const removeLine = React.useCallback(
+    (id: string) => {
+      if (onRemove) {
+        onRemove(id)
+        return
+      }
+      setInternalLines((prev) => prev.filter((line) => line.id !== id))
+    },
+    [onRemove]
+  )
 
   const count = React.useMemo(
     () => lines.reduce((sum, line) => sum + line.qty, 0),

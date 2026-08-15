@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -19,6 +20,7 @@ export type HeaderProps = {
 
 export function Header({ cta = { href: "/cart", label: "Korpa" } }: HeaderProps) {
   const pathname = usePathname();
+  const { count, ready } = useCart();
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -51,9 +53,15 @@ export function Header({ cta = { href: "/cart", label: "Korpa" } }: HeaderProps)
 
       <Link
         href={cta.href}
-        className="shrink-0 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 sm:text-sm"
+        className="flex shrink-0 items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 sm:text-sm"
       >
         {cta.label}
+        {/* Rendered only after the stored cart is read, to avoid a hydration mismatch. */}
+        {ready && count > 0 && (
+          <span className="rounded-full bg-primary-foreground/20 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
+            {count}
+          </span>
+        )}
       </Link>
     </header>
   );

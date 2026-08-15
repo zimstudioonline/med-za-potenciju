@@ -135,6 +135,16 @@ export type Checkout01Props = {
   paymentMethods?: string[]
   /** "cod" swaps the card fields for a cash-on-delivery notice. */
   paymentMode?: "card" | "cod"
+  /** Server action handling the submission. Without it the form is inert. */
+  formAction?: (formData: FormData) => void
+  /** Disables the submit button and swaps its label while the action runs. */
+  pending?: boolean
+  pendingLabel?: string
+  /** Result message shown beside the submit button. */
+  statusMessage?: string
+  statusVariant?: "error" | "success"
+  /** Extra inputs rendered inside the form — hidden cart payload, order notes, etc. */
+  extraFields?: React.ReactNode
   /** Heading element — use "h1" when this is the page's main heading. */
   as?: "h1" | "h2"
   className?: string
@@ -202,6 +212,12 @@ export function Checkout01({
   secureNote = "Encrypted and secured. We never store full card details.",
   paymentMethods = ["Visa", "Mastercard", "Amex", "Apple Pay"],
   paymentMode = "card",
+  formAction,
+  pending = false,
+  pendingLabel,
+  statusMessage,
+  statusVariant = "error",
+  extraFields,
   as: Heading = "h2",
   className,
 }: Checkout01Props) {
@@ -273,7 +289,8 @@ export function Checkout01({
             viewport={viewport}
             variants={stagger(0.08)}
             id="checkout-form"
-            onSubmit={(e) => e.preventDefault()}
+            action={formAction}
+            onSubmit={formAction ? undefined : (e) => e.preventDefault()}
             className="flex flex-col gap-10"
           >
             {/* 1) Contact */}
@@ -515,6 +532,8 @@ export function Checkout01({
               </div>
               )}
             </motion.fieldset>
+
+            {extraFields}
           </motion.form>
 
           {/* RIGHT — order summary */}
@@ -592,14 +611,31 @@ export function Checkout01({
               <button
                 type="submit"
                 form="checkout-form"
+                disabled={pending}
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "mt-6 w-full gap-2"
+                  "mt-6 w-full gap-2 disabled:pointer-events-none disabled:opacity-60"
                 )}
               >
                 <Lock className="size-4" aria-hidden />
-                {submitLabel} · {formatMoney(total, currency)}
+                {pending && pendingLabel
+                  ? pendingLabel
+                  : `${submitLabel} · ${formatMoney(total, currency)}`}
               </button>
+
+              {statusMessage && (
+                <p
+                  aria-live="polite"
+                  className={cn(
+                    "mt-4 rounded-lg border p-3 text-sm leading-6",
+                    statusVariant === "success"
+                      ? "border-primary/40 bg-primary/10 text-foreground"
+                      : "border-destructive/40 bg-destructive/10 text-foreground"
+                  )}
+                >
+                  {statusMessage}
+                </p>
+              )}
 
               <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
                 <ShieldCheck className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />

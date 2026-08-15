@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { AddToCart } from "@/components/add-to-cart";
 import { featuredProducts } from "@/data/catalog";
 import { formatMoney } from "@/lib/money";
 import { SHIPPING_FEE } from "@/lib/shipping";
@@ -61,24 +60,20 @@ export function Packages() {
                       <p className="text-xl font-black tabular-nums">
                         {formatMoney(pack.price, pack.currency)}
                       </p>
-                      <Link
-                        href={`/shop/${pack.slug}`}
-                        className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
-                      >
-                        Izaberi
-                      </Link>
+                      <AddToCart slug={pack.slug} label="Izaberi" goToCart />
                     </div>
                   </article>
                 );
               })}
             </div>
 
-            <Link
-              href="/cart"
-              className="mt-8 inline-flex rounded-full bg-primary px-8 py-4 text-base font-bold uppercase tracking-wide text-primary-foreground shadow-lg shadow-primary/25 transition hover:opacity-90"
-            >
-              🛒 Naruči med za potenciju
-            </Link>
+            {/* Defaults to the standard 7-sachet pack — the one most people want. */}
+            <AddToCart
+              slug={packs[packs.length - 1]!.slug}
+              label="🛒 Naruči med za potenciju"
+              goToCart
+              className="mt-8 inline-flex px-8 py-4 text-base font-bold uppercase tracking-wide shadow-lg shadow-primary/25"
+            />
 
             <p className="mt-4 text-sm text-muted-foreground tabular-nums">
               Dostava {formatMoney(SHIPPING_FEE)} · plaćanje pouzećem kuriru brze pošte

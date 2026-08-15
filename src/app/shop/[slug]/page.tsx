@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { AddToCart } from "@/components/add-to-cart";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Product01 } from "@/components/sections/product-01";
@@ -80,6 +81,23 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="space-y-6">
+          <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-muted/30 p-6">
+            <p className="text-2xl font-black tabular-nums">
+              {formatMoney(product.price, product.currency)}
+            </p>
+            <AddToCart
+              slug={product.slug}
+              label="Dodaj u korpu"
+              className="px-6 py-3 text-base font-bold"
+            />
+            <AddToCart
+              slug={product.slug}
+              label="Poruči odmah"
+              goToCart
+              className="border border-primary bg-transparent px-6 py-3 text-base font-bold text-primary hover:bg-primary/10"
+            />
+          </div>
+
           <div>
             <h2 className="text-2xl font-bold">O proizvodu</h2>
             <p className="mt-2 text-muted-foreground">{product.description}</p>
