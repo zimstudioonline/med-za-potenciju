@@ -1,6 +1,9 @@
 /**
  * Minimal Resend client over fetch — no SDK dependency.
  *
+ * Koristi ga i porudžbina i kontakt forma: obe šalju na istu adresu radnje,
+ * a adresa pošiljaoca ide u reply-to da se odgovara jednim klikom.
+ *
  * Required environment variables:
  *   RESEND_API_KEY     API key from resend.com
  *   ORDER_EMAIL_FROM   verified sender, e.g. "Porudžbine <porudzbine@medzapotenciju.com>"
@@ -25,7 +28,7 @@ export class EmailNotConfiguredError extends Error {
   }
 }
 
-export async function sendOrderEmail({ subject, text, replyTo }: SendEmailInput): Promise<void> {
+export async function sendMail({ subject, text, replyTo }: SendEmailInput): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.ORDER_EMAIL_FROM;
   const to = process.env.ORDER_EMAIL_TO ?? DEFAULT_ORDER_RECIPIENT;

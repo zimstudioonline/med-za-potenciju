@@ -2,7 +2,7 @@
 
 import type { OrderState } from "@/app/actions/order-state";
 import { getProducts } from "@/lib/content";
-import { EmailNotConfiguredError, sendOrderEmail } from "@/lib/email";
+import { EmailNotConfiguredError, sendMail } from "@/lib/email";
 import { formatMoney } from "@/lib/money";
 import { SHIPPING_FEE } from "@/lib/shipping";
 
@@ -142,7 +142,7 @@ export async function placeOrder(
   ].join("\n");
 
   try {
-    await sendOrderEmail({
+    await sendMail({
       subject: `Porudžbina ${orderRef} — ${formatMoney(total)} — ${customer.firstName} ${customer.lastName}`,
       text: body,
       replyTo: customer.email || undefined,

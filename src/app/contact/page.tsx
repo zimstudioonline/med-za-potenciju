@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+
+import { ContactForm } from "./contact-form";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
 
 export const metadata: Metadata = {
@@ -27,83 +29,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-foreground">
-                Ime i prezime
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Vaše ime"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="vasa@email.com"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-foreground">
-                Telefonski broj
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="+381 60 123 4567"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-foreground">
-                Predmet
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                required
-                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Tema poruke"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-foreground">
-                Poruka
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                className="mt-2 w-full rounded-lg border border-input bg-card px-4 py-2 text-foreground placeholder-muted-foreground transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Napišite vašu poruku..."
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
-            >
-              Pošalji poruku
-            </button>
-          </form>
+          <ContactForm />
 
           <div className="grid gap-6 border-t border-border pt-8 md:grid-cols-2">
             <div>
