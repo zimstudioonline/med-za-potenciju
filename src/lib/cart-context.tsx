@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { findProduct } from "@/data/catalog";
+import type { Product } from "@/data/catalog";
 
 const STORAGE_KEY = "mzp-cart-v1";
 
@@ -20,6 +20,11 @@ export type ResolvedLine = {
   image?: string;
 };
 
+/**
+ * Provera oblika, bez provere da li proizvod postoji — katalog sada stiže iz
+ * CMS-a preko servera, pa se nepostojeći slugovi odbacuju kasnije, kad se linija
+ * spaja sa proizvodom.
+ */
 function parseStored(raw: string | null): CartLine[] {
   if (!raw) return [];
 
@@ -30,9 +35,7 @@ function parseStored(raw: string | null): CartLine[] {
     return parsed.flatMap((entry): CartLine[] => {
       if (typeof entry !== "object" || entry === null) return [];
       const { slug, qty } = entry as Partial<CartLine>;
-      // Drop lines whose product no longer exists, so a renamed pack cannot
-      // resurrect as an unpriceable ghost in someone's saved cart.
-      if (typeof slug !== "string" || !findProduct(slug)) return [];
+      if (typeof slug !== "string" || slug.length === 0) return [];
       const safeQty = typeof qty === "number" && Number.isFinite(qty) ? Math.floor(qty) : 1;
       return [{ slug, qty: Math.min(Math.max(safeQty, 1), 99) }];
     });
@@ -112,22 +115,40 @@ type CartContextValue = {
 
 const CartContext = React.createContext<CartContextValue | null>(null);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+/**
+ * `products` stiže iz korenskog layouta, koji ih čita iz CMS-a na serveru.
+ * Klijent nema pristup fajlovima sa sadržajem, pa katalog mora da se prosledi.
+ */
+export function CartProvider({
+  children,
+  products,
+}: {
+  children: React.ReactNode;
+  products: Product[];
+}) {
   const stored = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const ready = React.useSyncExternalStore(noopSubscribe, alwaysTrue, alwaysFalse);
 
-  const add = React.useCallback((slug: string, qty = 1) => {
-    if (!findProduct(slug)) return;
-    const current = getSnapshot();
-    const existing = current.find((line) => line.slug === slug);
-    write(
-      existing
-        ? current.map((line) =>
-            line.slug === slug ? { ...line, qty: Math.min(line.qty + qty, 99) } : line
-          )
-        : [...current, { slug, qty: Math.min(Math.max(qty, 1), 99) }]
-    );
-  }, []);
+  const bySlug = React.useMemo(
+    () => new Map(products.map((product) => [product.slug, product])),
+    [products]
+  );
+
+  const add = React.useCallback(
+    (slug: string, qty = 1) => {
+      if (!bySlug.has(slug)) return;
+      const current = getSnapshot();
+      const existing = current.find((line) => line.slug === slug);
+      write(
+        existing
+          ? current.map((line) =>
+              line.slug === slug ? { ...line, qty: Math.min(line.qty + qty, 99) } : line
+            )
+          : [...current, { slug, qty: Math.min(Math.max(qty, 1), 99) }]
+      );
+    },
+    [bySlug]
+  );
 
   const setQty = React.useCallback((slug: string, qty: number) => {
     write(
@@ -144,8 +165,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = React.useCallback(() => write([]), []);
 
   const value = React.useMemo<CartContextValue>(() => {
+    // Linije čiji proizvod više ne postoji tiho ispadaju — preimenovano
+    // pakovanje ne sme da vaskrsne kao stavka bez cene u nečijoj korpi.
     const resolved = stored.flatMap((line): ResolvedLine[] => {
-      const product = findProduct(line.slug);
+      const product = bySlug.get(line.slug);
       if (!product) return [];
       return [
         {
@@ -170,7 +193,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       remove,
       clear,
     };
-  }, [stored, ready, add, setQty, remove, clear]);
+  }, [stored, bySlug, ready, add, setQty, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

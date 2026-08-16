@@ -6,17 +6,26 @@ import type { Transition, Variants } from "motion/react"
  */
 export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
-export const transition: Transition = { duration: 0.7, ease: EASE }
+/**
+ * 300 ms je gornja granica — duže od toga se pojavljivanje oseća kao čekanje,
+ * a ne kao odziv. Sve animacije diraju samo `opacity` i `transform`, koje
+ * kompozitor obrađuje bez ponovnog proračuna rasporeda.
+ */
+export const transition: Transition = { duration: 0.3, ease: EASE }
 
 /** Default in-view trigger for section reveals. */
-export const viewport = { once: true, margin: "-80px 0px" as const }
+export const viewport = { once: true, margin: "-60px 0px" as const }
 
+/**
+ * Bez `filter: blur()` — bio je najskuplji deo ove animacije, jer tera GPU da
+ * ponovo rasterizuje ceo sloj u svakom kadru, a na tekstu se čita kao zamućenje
+ * dok se pokušava pročitati.
+ */
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 12 },
   visible: (delay: number = 0) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { ...transition, delay },
   }),
 }

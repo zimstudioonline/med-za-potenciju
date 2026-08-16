@@ -1,6 +1,6 @@
 "use server";
 
-import { findProduct } from "@/data/catalog";
+import { getProducts } from "@/lib/content";
 import { EmailNotConfiguredError, sendOrderEmail } from "@/lib/email";
 import { formatMoney } from "@/lib/money";
 import { SHIPPING_FEE, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
@@ -72,11 +72,13 @@ export async function placeOrder(
     requested = [];
   }
 
+  const catalog = new Map((await getProducts()).map((product) => [product.slug, product]));
+
   const lines = (Array.isArray(requested) ? requested : []).flatMap((entry) => {
     if (typeof entry !== "object" || entry === null) return [];
     const { slug, qty } = entry as { slug?: unknown; qty?: unknown };
     if (typeof slug !== "string") return [];
-    const product = findProduct(slug);
+    const product = catalog.get(slug);
     if (!product) return [];
     const quantity =
       typeof qty === "number" && Number.isFinite(qty)

@@ -1,39 +1,34 @@
-import { FAQ_ITEMS } from "@/data/product-content";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { FAQ_GROUP_LABELS, FAQ_ITEMS, type FaqGroup } from "@/data/product-content";
+import { PHONE_DISPLAY, PHONE_HOURS, PHONE_HREF } from "@/lib/contact";
 
-/**
- * Native <details> accordion — no client JS, and the answers stay in the HTML
- * where search engines can read them.
- */
+/** Group order is the reading order: what it is → is it safe → how to buy it. */
+const GROUP_ORDER: FaqGroup[] = ["proizvod", "bezbednost", "porucivanje"];
+
 export function Faq() {
   return (
     <section id="faq" className="mx-auto max-w-4xl px-6 py-20">
       <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-        Česta pitanja o Medu za potenciju
+        Česta pitanja o Medu za potenciju i načinu upotrebe
       </h2>
       <p className="mt-4 text-muted-foreground">
         Ako nešto nije razjašnjeno, pozovite nas na{" "}
-        <a href="tel:+381633423800" className="font-medium text-primary hover:underline">
-          +381 63 342 3800
+        <a href={PHONE_HREF} className="font-medium text-primary hover:underline">
+          {PHONE_DISPLAY}
         </a>{" "}
-        svakog dana od 10 do 20 časova.
+        {PHONE_HOURS}.
       </p>
 
-      <div className="mt-10 divide-y divide-border border-y border-border">
-        {FAQ_ITEMS.map((item) => (
-          <details key={item.question} className="group py-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left font-semibold [&::-webkit-details-marker]:hidden">
-              {item.question}
-              <span
-                aria-hidden
-                className="shrink-0 text-xl text-primary transition-transform group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">{item.answer}</p>
-          </details>
-        ))}
-      </div>
+      {GROUP_ORDER.map((group) => (
+        <div key={group} className="mt-12 first:mt-10">
+          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
+            {FAQ_GROUP_LABELS[group]}
+          </h3>
+          <div className="mt-4">
+            <FaqAccordion items={FAQ_ITEMS.filter((item) => item.group === group)} />
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

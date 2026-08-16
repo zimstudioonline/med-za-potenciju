@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -116,8 +117,8 @@ export default function ContactPage() {
             <div>
               <h3 className="font-semibold text-foreground">Telefonski broj</h3>
               <p className="mt-2 text-muted-foreground">
-                <a href="tel:+381633423800" className="hover:underline text-primary">
-                  +381 63 342 3800
+                <a href={PHONE_HREF} className="hover:underline text-primary">
+                  {PHONE_DISPLAY}
                 </a>
               </p>
             </div>

@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 
-/** Mirrors the categories actually used by posts in the catalog. */
-const FOOTER_CATEGORIES = ["Zdravlje", "Rutina", "Nutricionizam", "Proizvodi"];
+import { BLOG_CATEGORIES } from "@/data/catalog";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -28,13 +27,18 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="font-bold text-white">Kategorije</h4>
             <nav className="space-y-2 text-sm">
-              {FOOTER_CATEGORIES.map((category) => (
+              {/*
+               * Vode na /blog dok stranice po kategoriji ne postoje. Ranije su bila
+               * sidra na sekcije, ali blog više nije grupisan po kategorijama, pa bi
+               * ta sidra vodila u prazno.
+               */}
+              {BLOG_CATEGORIES.map((category) => (
                 <Link
-                  key={category}
+                  key={category.slug}
                   href="/blog"
                   className="block text-slate-400 transition hover:text-white"
                 >
-                  {category}
+                  {category.name}
                 </Link>
               ))}
               <Link href="/blog" className="inline-flex items-center gap-1 text-primary hover:underline">

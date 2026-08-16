@@ -7,6 +7,7 @@ import { useActionState } from "react";
 import { INITIAL_ORDER_STATE, placeOrder } from "@/app/actions/order";
 import { Checkout01 } from "@/components/sections/checkout-01";
 import { useCart } from "@/lib/cart-context";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
 import { DEFAULT_CURRENCY } from "@/lib/money";
 import { SHIPPING_ETA, SHIPPING_FEE } from "@/lib/shipping";
 
@@ -50,10 +51,10 @@ export function CheckoutClient() {
             Nazad na početnu
           </Link>
           <a
-            href="tel:+381633423800"
+            href={PHONE_HREF}
             className="rounded-full border border-border px-6 py-3 text-sm font-semibold transition hover:border-primary hover:text-primary"
           >
-            +381 63 342 3800
+            {PHONE_DISPLAY}
           </a>
         </div>
       </section>

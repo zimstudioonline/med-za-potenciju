@@ -1,12 +1,12 @@
 import { AddToCart } from "@/components/add-to-cart";
-import { featuredProducts } from "@/data/catalog";
+import { getProducts } from "@/lib/content";
 import { formatMoney } from "@/lib/money";
 import { SHIPPING_FEE } from "@/lib/shipping";
 
-/** Cheapest pack first is confusing here — customers compare upward from a single sachet. */
-const packs = [...featuredProducts].sort((a, b) => a.sachets - b.sachets);
+export async function Packages() {
+  /** Cheapest pack first is confusing here — customers compare upward from a single sachet. */
+  const packs = (await getProducts()).sort((a, b) => a.sachets - b.sachets);
 
-export function Packages() {
   return (
     <section id="pakovanja" className="border-y border-border bg-muted/30 py-20">
       <div className="mx-auto max-w-6xl px-6">
@@ -14,7 +14,7 @@ export function Packages() {
           <div>
             <img
               src="/med-za-potenciju-fortissimo.webp"
-              alt="Q4You Fortissimo — med za potenciju"
+              alt="Med za potenciju Q4You Fortissimo — pakovanje od 7 kesica po 7 g (49 g)"
               className="w-full rounded-[32px] border border-border bg-card object-contain shadow-lg"
             />
           </div>
@@ -38,7 +38,15 @@ export function Packages() {
                       isBest ? "border-primary ring-1 ring-primary/30" : "border-border"
                     }`}
                   >
-                    <div className="min-w-0">
+                    {pack.image && (
+                      <img
+                        src={pack.image}
+                        alt={pack.imageAlt ?? pack.name}
+                        className="size-16 shrink-0 rounded-xl border border-border object-cover"
+                      />
+                    )}
+
+                    <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-bold">{pack.packSize}</h3>
                         <span
@@ -70,7 +78,7 @@ export function Packages() {
             {/* Defaults to the standard 7-sachet pack — the one most people want. */}
             <AddToCart
               slug={packs[packs.length - 1]!.slug}
-              label="🛒 Naruči med za potenciju"
+              label="Naruči med za potenciju"
               goToCart
               className="mt-8 inline-flex px-8 py-4 text-base font-bold uppercase tracking-wide shadow-lg shadow-primary/25"
             />

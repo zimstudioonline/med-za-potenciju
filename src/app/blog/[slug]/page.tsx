@@ -4,19 +4,20 @@ import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { blogPosts, findPost } from "@/data/catalog";
+import { PostBody } from "@/components/post-body";
+import { findPostBySlug, getPostSlugs } from "@/lib/content";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  return (await getPostSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = findPost(slug);
+  const post = await findPostBySlug(slug);
 
   if (!post) {
     return { title: "Tekst nije pronađen" };
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = findPost(slug);
+  const post = await findPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -71,18 +72,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {post.image && (
           <img
             src={post.image}
-            alt={post.title}
+            alt={post.imageAlt || post.title}
             className="mt-10 h-64 w-full rounded-[28px] border border-border object-cover md:h-80"
           />
         )}
 
-        <div className="mt-10 max-w-none text-lg leading-8">
-          {post.content.map((paragraph) => (
-            <p key={paragraph} className="mb-5 text-muted-foreground">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+        <PostBody document={post.content} />
 
         <div className="mt-12 rounded-2xl border border-border bg-muted/40 p-6">
           <h2 className="text-lg font-bold">Q4You Fortissimo</h2>

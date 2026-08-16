@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { MotionProvider } from "@/components/motion-provider";
 
 import { CheckoutClient } from "./checkout-client";
 
@@ -15,7 +16,9 @@ export default function CheckoutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
-      <CheckoutClient />
+      <MotionProvider>
+        <CheckoutClient />
+      </MotionProvider>
       <Footer />
     </main>
   );

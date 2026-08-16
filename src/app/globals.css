@@ -134,5 +134,38 @@ a {
   }
   html {
     @apply font-sans;
+    /* Sticky header ne sme da prekrije naslov sekcije kad se skoči na #anchor. */
+    scroll-padding-top: 6rem;
+  }
+
+  /*
+   * Svi linkovi menjaju boju glatko. Samo `color` — ne `all`, jer bi tada i
+   * pomeranje i senka išli kroz istu tranziciju i na slabijim telefonima
+   * pravili trzaje.
+   */
+  a {
+    transition: color 200ms ease;
+  }
+
+  /* FAQ „+" se rotira; ovde mu se samo skraćuje trajanje na isti ritam. */
+  summary {
+    transition: color 200ms ease;
+  }
+}
+
+/*
+ * Korisnik koji je na svom uređaju isključio animacije ih ovde zaista i ne dobija.
+ * Ne `animation: none`, nego trajanje blizu nule — tako se animacije koje imaju
+ * završno stanje (npr. reveal koji postavlja opacity: 1) svejedno primene odmah,
+ * umesto da element ostane zauvek neviđen.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

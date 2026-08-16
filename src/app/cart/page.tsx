@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { MotionProvider } from "@/components/motion-provider";
 
 import { CartClient } from "./cart-client";
 
@@ -15,7 +16,9 @@ export default function CartPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header cta={{ href: "/checkout", label: "Plaćanje" }} />
-      <CartClient />
+      <MotionProvider>
+        <CartClient />
+      </MotionProvider>
       <Footer />
     </main>
   );
