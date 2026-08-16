@@ -73,7 +73,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <img
             src={post.image}
             alt={post.imageAlt || post.title}
-            className="mt-10 h-64 w-full rounded-[28px] border border-border object-cover md:h-80"
+            /* Isti odnos kao na kartici — fiksna visina je sekla ivice slike. */
+            className="mt-10 aspect-video w-full rounded-[28px] border border-border object-cover"
           />
         )}
 

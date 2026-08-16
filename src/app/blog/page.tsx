@@ -26,8 +26,17 @@ function PostCard({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-lg"
     >
+      {/*
+       * 16:9 je odnos u kome se prave naslovne slike, isti koji koriste i OG
+       * pregledi na društvenim mrežama. Ranije je ovde stajalo 16:10, pa je
+       * `object-cover` sekao levu i desnu ivicu — a tamo na grafikama stoji tekst.
+       */}
       {post.image && (
-        <img src={post.image} alt={post.title} className="aspect-[16/10] w-full object-cover" />
+        <img
+          src={post.image}
+          alt={post.imageAlt || post.title}
+          className="aspect-video w-full object-cover"
+        />
       )}
 
       <div className="flex flex-1 flex-col p-6">
