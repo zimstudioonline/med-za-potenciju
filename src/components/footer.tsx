@@ -13,7 +13,12 @@ export function Footer() {
     <footer className="bg-slate-950 text-slate-300">
       <div className="mx-auto max-w-6xl px-6 py-16">
         {/* Main footer content */}
-        <div className="grid gap-12 md:grid-cols-4">
+        {/*
+         * Tri kolone dok ne postoje pravne stranice. Kolona „Pravno" je sklonjena
+         * jer su joj svi linkovi vodili na href="#", a mrtav link u footeru
+         * prodavnice čini više štete nego njegovo odsustvo.
+         */}
+        <div className="grid gap-12 md:grid-cols-3">
           {/* Brand section */}
           <div className="space-y-4">
             <h3 className="text-xl font-black text-white">Med za potenciju</h3>
@@ -66,37 +71,14 @@ export function Footer() {
               <Link href="/contact" className="block text-slate-400 transition hover:text-white">
                 Kontakt
               </Link>
+              {/* Jedini link iz nekadašnje kolone „Pravno" koji zaista postoji. */}
+              <a
+                href="/sitemap.xml"
+                className="block text-slate-400 transition hover:text-white"
+              >
+                Mapa sajta
+              </a>
             </nav>
-          </div>
-
-          {/* Pravno & Društvene mreže */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h4 className="font-bold text-white">Pravno</h4>
-              <nav className="space-y-2 text-sm">
-                <Link href="#" className="block text-slate-400 transition hover:text-white">
-                  Politika privatnosti
-                </Link>
-                <Link href="#" className="block text-slate-400 transition hover:text-white">
-                  Cookie politika
-                </Link>
-                <Link href="#" className="block text-slate-400 transition hover:text-white">
-                  Disclaimer
-                </Link>
-                <Link href="#" className="block text-slate-400 transition hover:text-white">
-                  Mapa sajta
-                </Link>
-              </nav>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-bold text-white">Društvene mreže</h4>
-              <nav className="space-y-2 text-sm">
-                <Link href="#" className="block text-slate-400 transition hover:text-white">
-                  Facebook
-                </Link>
-              </nav>
-            </div>
           </div>
         </div>
 
