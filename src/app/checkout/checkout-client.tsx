@@ -4,7 +4,8 @@ import Link from "next/link";
 import * as React from "react";
 import { useActionState } from "react";
 
-import { INITIAL_ORDER_STATE, placeOrder } from "@/app/actions/order";
+import { placeOrder } from "@/app/actions/order";
+import { INITIAL_ORDER_STATE } from "@/app/actions/order-state";
 import { Checkout01 } from "@/components/sections/checkout-01";
 import { useCart } from "@/lib/cart-context";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";

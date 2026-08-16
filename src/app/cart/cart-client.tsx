@@ -3,7 +3,7 @@
 import { Cart01 } from "@/components/sections/cart-01";
 import { useCart } from "@/lib/cart-context";
 import { DEFAULT_CURRENCY } from "@/lib/money";
-import { FREE_SHIPPING_THRESHOLD, SHIPPING_FEE } from "@/lib/shipping";
+import { SHIPPING_FEE } from "@/lib/shipping";
 
 export function CartClient() {
   const { lines, setQty, remove, ready } = useCart();
@@ -26,7 +26,6 @@ export function CartClient() {
       onQtyChange={setQty}
       onRemove={remove}
       currency={DEFAULT_CURRENCY}
-      freeShippingThreshold={FREE_SHIPPING_THRESHOLD}
       shippingFee={SHIPPING_FEE}
       taxRate={0}
       checkoutHref="/checkout"

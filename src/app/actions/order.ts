@@ -1,19 +1,10 @@
 "use server";
 
+import type { OrderState } from "@/app/actions/order-state";
 import { getProducts } from "@/lib/content";
 import { EmailNotConfiguredError, sendOrderEmail } from "@/lib/email";
 import { formatMoney } from "@/lib/money";
-import { SHIPPING_FEE, FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
-
-export type OrderState = {
-  status: "idle" | "success" | "error";
-  message: string;
-  /** Per-field messages, keyed by input name. */
-  fieldErrors?: Record<string, string>;
-  orderRef?: string;
-};
-
-export const INITIAL_ORDER_STATE: OrderState = { status: "idle", message: "" };
+import { SHIPPING_FEE } from "@/lib/shipping";
 
 type RequiredField = { name: string; label: string; minLength: number };
 
@@ -105,7 +96,7 @@ export async function placeOrder(
   }
 
   const subtotal = lines.reduce((sum, line) => sum + line.product.price * line.qty, 0);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const shipping = SHIPPING_FEE;
   const total = subtotal + shipping;
 
   const orderRef = orderReference();
@@ -134,7 +125,7 @@ export async function placeOrder(
     ),
     "",
     `  Međuzbir:  ${formatMoney(subtotal)}`,
-    `  Dostava:   ${shipping === 0 ? "Besplatno" : formatMoney(shipping)}`,
+    `  Dostava:   ${formatMoney(shipping)}`,
     `  UKUPNO:    ${formatMoney(total)}  (plaćanje pouzećem)`,
     "",
     "KUPAC",

@@ -152,7 +152,9 @@ export function Cart01({
   items = defaultItems,
   labels,
   currency = "$",
-  freeShippingThreshold = 250,
+  // Bez izricitog praga nema besplatne dostave — 250 kao podrazumevana
+  // vrednost bi tiho poklonila dostavu na skoro svaku porudzbinu.
+  freeShippingThreshold = Infinity,
   shippingFee = 12,
   taxRate = 0.08,
   onQtyChange,

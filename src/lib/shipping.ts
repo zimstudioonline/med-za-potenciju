@@ -4,7 +4,9 @@
  */
 export const SHIPPING_FEE = 535;
 
-/** Order value above which delivery is free. */
-export const FREE_SHIPPING_THRESHOLD = 5000;
+/*
+ * Namerno nema praga za besplatnu dostavu: dostava se naplaćuje na svaku
+ * porudžbinu, bez obzira na iznos.
+ */
 
 export const SHIPPING_ETA = "Isporuka u roku od 24 časa, diskretno pakovanje";
