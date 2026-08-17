@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { CookieConsent } from "@/components/cookie-consent";
 import { StickyCta } from "@/components/sticky-cta";
 import { CartProvider } from "@/lib/cart-context";
 import { getProducts } from "@/lib/content";
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider products={products}>
           {children}
           <StickyCta />
+          <CookieConsent />
         </CartProvider>
       </body>
     </html>

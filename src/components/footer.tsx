@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { BLOG_CATEGORIES } from "@/data/catalog";
+import { ACTIVE_SOCIAL_LINKS } from "@/lib/social";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -14,11 +15,11 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-16">
         {/* Main footer content */}
         {/*
-         * Tri kolone dok ne postoje pravne stranice. Kolona „Pravno" je sklonjena
-         * jer su joj svi linkovi vodili na href="#", a mrtav link u footeru
-         * prodavnice čini više štete nego njegovo odsustvo.
+         * Četvrta kolona okuplja pravne stranice. Ranije je bila sklonjena jer su
+         * joj svi linkovi vodili na href="#" — sada svaki vodi na stranicu koja
+         * zaista postoji, a link se dodaje tek kada stranica postoji.
          */}
-        <div className="grid gap-12 md:grid-cols-3">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand section */}
           <div className="space-y-4">
             <h3 className="text-xl font-black text-white">Med za potenciju</h3>
@@ -71,14 +72,61 @@ export function Footer() {
               <Link href="/contact" className="block text-slate-400 transition hover:text-white">
                 Kontakt
               </Link>
-              {/* Jedini link iz nekadašnje kolone „Pravno" koji zaista postoji. */}
-              <a
-                href="/sitemap.xml"
+            </nav>
+          </div>
+
+          {/* Korisni linkovi */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-white">Korisni linkovi</h4>
+            <nav className="space-y-2 text-sm">
+              <Link
+                href="/politika-privatnosti"
                 className="block text-slate-400 transition hover:text-white"
               >
+                Politika privatnosti
+              </Link>
+              <Link
+                href="/odricanje-od-odgovornosti"
+                className="block text-slate-400 transition hover:text-white"
+              >
+                Disclaimer
+              </Link>
+              <Link
+                href="/partnerska-saradnja"
+                className="block text-slate-400 transition hover:text-white"
+              >
+                Affiliate Disclosure
+              </Link>
+              <Link
+                href="/podesavanja-kolacica"
+                className="block text-slate-400 transition hover:text-white"
+              >
+                Podešavanja kolačića
+              </Link>
+              <a href="/sitemap.xml" className="block text-slate-400 transition hover:text-white">
                 Mapa sajta
               </a>
             </nav>
+
+            {/* Naslov se pojavljuje tek kada postoji bar jedan profil. */}
+            {ACTIVE_SOCIAL_LINKS.length > 0 && (
+              <div className="space-y-2 pt-4">
+                <h4 className="font-bold text-white">Društvene mreže</h4>
+                <nav className="space-y-2 text-sm">
+                  {ACTIVE_SOCIAL_LINKS.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener"
+                      className="block text-slate-400 transition hover:text-white"
+                    >
+                      {social.name}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            )}
           </div>
         </div>
 
