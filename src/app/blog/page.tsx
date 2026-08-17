@@ -27,16 +27,20 @@ function PostCard({ post }: { post: BlogPost }) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-lg"
     >
       {/*
-       * 16:9 je odnos u kome se prave naslovne slike, isti koji koriste i OG
-       * pregledi na društvenim mrežama. Ranije je ovde stajalo 16:10, pa je
-       * `object-cover` sekao levu i desnu ivicu — a tamo na grafikama stoji tekst.
+       * Okvir je 16:9, isti odnos koji koriste OG pregledi na društvenim mrežama.
+       * Slika se u njega uklapa (`object-contain`), a ne seče: naslovne grafike
+       * imaju tekst uz sve četiri ivice, pa je `object-cover` odsecao natpise —
+       * kod slika 3:2 celu donju traku. Tamna podloga popunjava ostatak okvira;
+       * slike koje su već 16:9 je prekriju bez ostatka.
        */}
       {post.image && (
-        <img
-          src={post.image}
-          alt={post.imageAlt || post.title}
-          className="aspect-video w-full object-cover"
-        />
+        <div className="aspect-video w-full bg-[#0b1120]">
+          <img
+            src={post.image}
+            alt={post.imageAlt || post.title}
+            className="h-full w-full object-contain"
+          />
+        </div>
       )}
 
       <div className="flex flex-1 flex-col p-6">

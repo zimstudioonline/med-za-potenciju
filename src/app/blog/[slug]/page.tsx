@@ -70,12 +70,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <p className="mt-4 text-lg text-muted-foreground">Autor: {post.author}</p>
 
         {post.image && (
-          <img
-            src={post.image}
-            alt={post.imageAlt || post.title}
-            /* Isti odnos kao na kartici — fiksna visina je sekla ivice slike. */
-            className="mt-10 aspect-video w-full rounded-[28px] border border-border object-cover"
-          />
+          /* Isti okvir kao na kartici: 16:9, slika se uklapa a ne seče, jer
+             naslovne grafike nose tekst uz ivice. */
+          <div className="mt-10 aspect-video w-full overflow-hidden rounded-[28px] border border-border bg-[#0b1120]">
+            <img
+              src={post.image}
+              alt={post.imageAlt || post.title}
+              className="h-full w-full object-contain"
+            />
+          </div>
         )}
 
         <PostBody document={post.content} />
