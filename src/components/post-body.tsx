@@ -14,7 +14,10 @@ const renderers: DocumentRendererProps["renderers"] = {
     link: ({ href, children }) => (
       <a
         href={href}
-        className="font-medium text-primary underline underline-offset-2 hover:no-underline"
+        /* Linkovi u tekstu su plavi, a ne narandžasti kao `primary` — narandžasta
+           je boja dugmadi za kupovinu, pa je čitaocu jasnije kada je nešto link
+           u tekstu a kada poziv na akciju. */
+        className="font-medium text-blue-700 underline underline-offset-2 hover:no-underline dark:text-blue-400"
       >
         {children}
       </a>
