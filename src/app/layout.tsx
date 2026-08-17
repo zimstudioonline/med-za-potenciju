@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     siteName: "Med za potenciju",
     images: ["/med-za-potenciju-fortissimo.webp"],
   },
+  // Potvrda vlasništva za Google Search Console. Next iz ovoga ispisuje
+  // <meta name="google-site-verification">, pa oznaka stoji na svakoj stranici.
+  verification: {
+    google: "lColmvIV-kqLHNnGA53Qr-IywwFGdj5I0GBg5NWlP4c",
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
