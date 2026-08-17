@@ -96,6 +96,12 @@ export default config({
             listTypes: true,
           },
           links: true,
+          // Slike unutar teksta stoje odvojeno od naslovnih, da se dve namene ne
+          // mešaju u istom folderu.
+          images: {
+            directory: "public/blog/u-tekstu",
+            publicPath: "/blog/u-tekstu/",
+          },
         }),
       },
     }),

@@ -52,6 +52,15 @@ const renderers: DocumentRendererProps["renderers"] = {
         </Tag>
       );
     },
+    image: ({ src, alt }) => (
+      <img
+        src={src}
+        alt={alt}
+        /* Slike u tekstu su iste širine kao tekst; visina ide iz same slike, pa
+           se grafike raznih odnosa ne izobličuju. */
+        className="mb-8 mt-4 w-full rounded-[20px] border border-border"
+      />
+    ),
     blockquote: ({ children }) => (
       <blockquote className="mb-6 border-l-4 border-primary/40 pl-5 italic text-muted-foreground">
         {children}
