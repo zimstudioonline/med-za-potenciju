@@ -254,7 +254,9 @@ export function Cart01({
           </a>
         </motion.div>
 
-        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[2fr_1fr] lg:gap-12">
+        {/* Isti razlog kao u checkout-01: bez minmax(0,…) kolona naraste do
+            min-content širine reda sa proizvodom i gurne celu stranicu ulevo. */}
+        <div className="mt-10 grid grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-12">
           {/* LEFT — line items */}
           <motion.div variants={fadeUp}>
             {isEmpty ? (

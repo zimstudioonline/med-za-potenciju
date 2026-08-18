@@ -281,7 +281,14 @@ export function Checkout01({
           </motion.p>
         </motion.div>
 
-        <div className="mt-12 grid items-start gap-8 lg:grid-cols-[2fr_1fr] lg:gap-12">
+        {/*
+           * minmax(0,…) je namerno: bez toga kolona rešetke naraste do min-content
+           * širine najšire stavke — a naziv proizvoda u pregledu porudžbine je
+           * `truncate`, dakle nelomljiv. Na telefonu je to gurnulo stranicu na 517px
+           * pri ekranu od 390px, pa su footer i traka za kolačiće ostajali uži od
+           * sadržaja.
+           */}
+        <div className="mt-12 grid grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-12">
           {/* LEFT — the form */}
           <motion.form
             initial="hidden"
