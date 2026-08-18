@@ -6,7 +6,9 @@ import { FaqAccordion } from "@/components/faq-accordion";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { CartIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { getProducts } from "@/lib/content";
+import { breadcrumbSchema, faqPageSchema, graph, productGroupSchema } from "@/lib/schema";
 import { PACK_ADVICE, SHOP_FAQ_ITEMS, TRUST_BAR } from "@/data/product-content";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
 import { formatMoney } from "@/lib/money";
@@ -22,58 +24,19 @@ export const metadata: Metadata = {
 type Packs = Awaited<ReturnType<typeof getProducts>>;
 
 function StructuredData({ products }: { products: Packs }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Početna",
-            item: "https://medzapotenciju.com/",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Med za potenciju",
-            item: "https://medzapotenciju.com/shop",
-          },
-        ],
-      },
-      {
-        "@type": "Product",
-        name: "Med za potenciju — Q4You Fortissimo",
-        description:
-          "Dodatak ishrani na bazi meda i biljnih ekstrakata, u kesicama od 7 g. Dostupan u pakovanjima od 1, 3 i 7 kesica.",
-        image: "https://medzapotenciju.com/med-za-potenciju-fortissimo.webp",
-        brand: { "@type": "Brand", name: "Q4You" },
-        category: "Dodatak ishrani",
-        offers: products.map((pack) => ({
-          "@type": "Offer",
-          name: pack.packSize,
-          price: pack.price,
-          priceCurrency: "RSD",
-          availability: "https://schema.org/InStock",
-          url: `https://medzapotenciju.com/shop/${pack.slug}`,
-        })),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: SHOP_FAQ_ITEMS.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      },
-    ],
-  };
-
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    <JsonLd
+      data={graph([
+        breadcrumbSchema([
+          { name: "Početna", path: "/" },
+          { name: "Med za potenciju", path: "/shop" },
+        ]),
+        productGroupSchema(
+          products,
+          "Dodatak ishrani na bazi meda i biljnih ekstrakata, u kesicama od 7 g. Dostupan u pakovanjima od 1, 3 i 7 kesica."
+        ),
+        faqPageSchema(SHOP_FAQ_ITEMS),
+      ])}
     />
   );
 }

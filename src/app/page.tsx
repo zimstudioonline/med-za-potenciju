@@ -7,7 +7,16 @@ import { Faq } from "@/components/home/faq";
 import { Hero } from "@/components/home/hero";
 import { CartIcon } from "@/components/icons";
 import { Packages } from "@/components/home/packages";
+import { JsonLd } from "@/components/json-ld";
 import { getPosts, getProducts } from "@/lib/content";
+import {
+  breadcrumbSchema,
+  faqPageSchema,
+  graph,
+  organizationSchema,
+  productGroupSchema,
+  websiteSchema,
+} from "@/lib/schema";
 import {
   AUDIENCE_FOR,
   AUDIENCE_NOT_FOR,
@@ -38,67 +47,20 @@ export const metadata: Metadata = {
 const LAST_REVIEWED = "avgust 2026.";
 
 /**
- * Organization + WebSite + Product/Offer + FAQPage. Deliberately no aggregateRating —
- * there are no real reviews yet, and inventing them would be both dishonest and a
- * policy breach. No LocalBusiness either: there is no physical shop to describe.
+ * Organization + WebSite + ProductGroup + FAQPage + Breadcrumb. Namerno bez
+ * aggregateRating — nema stvarnih recenzija, a izmišljene bi bile i laž i
+ * kršenje Google-ovih pravila. Nema ni LocalBusiness: ne postoji prodavnica.
  */
 function StructuredData({ products }: { products: Awaited<ReturnType<typeof getProducts>> }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://medzapotenciju.com/#organization",
-        name: "Med za potenciju",
-        url: "https://medzapotenciju.com",
-        logo: "https://medzapotenciju.com/med-za-potenciju-com-logo.webp",
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+381633423800",
-          contactType: "customer service",
-          areaServed: "RS",
-          availableLanguage: "Serbian",
-        },
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://medzapotenciju.com/#website",
-        url: "https://medzapotenciju.com",
-        name: "Med za potenciju",
-        inLanguage: "sr-RS",
-        publisher: { "@id": "https://medzapotenciju.com/#organization" },
-      },
-      {
-        "@type": "Product",
-        name: "Q4You Fortissimo — med za potenciju",
-        description: SHORT_ANSWER,
-        image: "https://medzapotenciju.com/med-za-potenciju-fortissimo.webp",
-        brand: { "@type": "Brand", name: "Q4You" },
-        category: "Dodatak ishrani",
-        offers: products.map((pack) => ({
-          "@type": "Offer",
-          name: pack.packSize,
-          price: pack.price,
-          priceCurrency: "RSD",
-          availability: "https://schema.org/InStock",
-          url: `https://medzapotenciju.com/shop/${pack.slug}`,
-        })),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: FAQ_ITEMS.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      },
-    ],
-  };
-
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    <JsonLd
+      data={graph([
+        organizationSchema,
+        websiteSchema,
+        productGroupSchema(products, SHORT_ANSWER),
+        faqPageSchema(FAQ_ITEMS),
+        breadcrumbSchema([{ name: "Početna", path: "/" }]),
+      ])}
     />
   );
 }

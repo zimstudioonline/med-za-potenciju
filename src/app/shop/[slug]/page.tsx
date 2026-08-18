@@ -10,7 +10,9 @@ import { CartIcon, PhoneIcon } from "@/components/icons";
 import { MotionProvider } from "@/components/motion-provider";
 import { Reveal } from "@/components/reveal";
 import { Product01 } from "@/components/sections/product-01";
+import { JsonLd } from "@/components/json-ld";
 import { findProductBySlug, getProducts, getProductSlugs } from "@/lib/content";
+import { breadcrumbSchema, faqPageSchema, graph, productSchema } from "@/lib/schema";
 import { PACK_CONTENT } from "@/data/pack-content";
 import {
   INGREDIENTS,
@@ -72,8 +74,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
     ? [{ src: product.image, alt: product.imageAlt ?? `${product.name} — pakovanje` }]
     : undefined;
 
+  const faqItems = [...(pack?.faq ?? []), ...PRODUCT_FAQ_ITEMS];
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/*
+       * Proizvod, put do njega i pitanja koja se na stranici zaista vide. Cena i
+       * slika dolaze iz istog izvora kao i prikaz, pa ne mogu da se raziđu.
+       */}
+      <JsonLd
+        data={graph([
+          productSchema(product),
+          breadcrumbSchema([
+            { name: "Početna", path: "/" },
+            { name: "Med za potenciju", path: "/shop" },
+            { name: product.packSize, path: `/shop/${product.slug}` },
+          ]),
+          faqPageSchema(faqItems),
+        ])}
+      />
       <Header />
 
       <MotionProvider>
@@ -549,7 +568,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               Česta pitanja o Medu za potenciju
             </h2>
             <div className="mt-8">
-              <FaqAccordion items={[...(pack?.faq ?? []), ...PRODUCT_FAQ_ITEMS]} />
+              <FaqAccordion items={faqItems} />
             </div>
           </Reveal>
         </section>
