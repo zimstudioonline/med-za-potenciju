@@ -134,10 +134,22 @@ export function Footer() {
         <div className="my-12 border-t border-slate-800" />
 
         {/* Bottom section */}
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-slate-500">
-            © 2026 Med za potenciju. Sva prava zadržana.
-          </p>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="text-sm text-slate-500">
+            <p>© 2026 Med za potenciju. Sva prava zadržana.</p>
+            <p className="mt-1">
+              Design &amp; SEO by{" "}
+              {/* Autorski potpis vodi van sajta, pa ide u novi tab uz rel zbog bezbednosti. */}
+              <a
+                href="https://zimdigital.rs/"
+                target="_blank"
+                rel="noopener"
+                className="font-medium text-slate-400 underline underline-offset-2 transition hover:text-white"
+              >
+                ZiM Digital
+              </a>
+            </p>
+          </div>
           <button
             onClick={scrollToTop}
             className="flex size-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
