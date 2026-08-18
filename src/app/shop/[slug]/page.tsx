@@ -11,6 +11,7 @@ import { MotionProvider } from "@/components/motion-provider";
 import { Reveal } from "@/components/reveal";
 import { Product01 } from "@/components/sections/product-01";
 import { findProductBySlug, getProducts, getProductSlugs } from "@/lib/content";
+import { PACK_CONTENT } from "@/data/pack-content";
 import {
   INGREDIENTS,
   LANDING_BENEFITS,
@@ -58,6 +59,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  /*
+   * Tekst koji se razlikuje po pakovanju. Ako se pojavi novi proizvod bez svog
+   * unosa, stranica pada na zajednički tekst umesto da pukne.
+   */
+  const pack = PACK_CONTENT[product.slug];
+
   /** Cheapest pack first — the comparison table reads upward from a single sachet. */
   const packsByPrice = (await getProducts()).sort((a, b) => a.sachets - b.sachets);
 
@@ -103,15 +110,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="mx-auto max-w-4xl px-6">
             <Reveal>
               <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-                Med za potenciju – Q4You Fortissimo
+                {pack?.introHeading ?? "Med za potenciju – Q4You Fortissimo"}
               </h2>
 
               <p className="mt-6 text-lg font-semibold leading-8">
-                Q4You Fortissimo je dodatak ishrani na bazi meda i kombinacije biljnih sastojaka,
-                dostupan u praktičnim kesicama od 7 g.
+                {pack?.intro ??
+                  "Q4You Fortissimo je dodatak ishrani na bazi meda i kombinacije biljnih sastojaka, dostupan u praktičnim kesicama od 7 g."}
               </p>
 
               <div className="mt-4 space-y-4 leading-8 text-muted-foreground">
+                <p>
+                  Q4You Fortissimo je dodatak ishrani na bazi meda i kombinacije biljnih sastojaka,
+                  dostupan u praktičnim kesicama od 7 g.
+                </p>
                 <p>
                   Proizvod je namenjen odrasloj populaciji i predstavlja praktičan način da u
                   svakodnevnu rutinu uključite proizvod na bazi meda, biljnih ekstrakata, začina i
@@ -269,10 +280,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <section className="mx-auto max-w-6xl px-6 py-16">
           <Reveal>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">
-              Zašto je Q4You Fortissimo praktičan izbor?
+              {pack?.whyHeading ?? "Zašto je Q4You Fortissimo praktičan izbor?"}
             </h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {LANDING_BENEFITS.map((benefit) => (
+              {(pack?.why ?? LANDING_BENEFITS).map((benefit) => (
                 <div
                   key={benefit.title}
                   className="rounded-[28px] border border-border bg-card p-6 shadow-sm transition duration-200 hover:border-primary/40 hover:shadow-md"
@@ -538,7 +549,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               Česta pitanja o Medu za potenciju
             </h2>
             <div className="mt-8">
-              <FaqAccordion items={PRODUCT_FAQ_ITEMS} />
+              <FaqAccordion items={[...(pack?.faq ?? []), ...PRODUCT_FAQ_ITEMS]} />
             </div>
           </Reveal>
         </section>
