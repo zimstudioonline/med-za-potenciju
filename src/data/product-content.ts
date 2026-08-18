@@ -474,63 +474,34 @@ export const FAQ_ITEMS: FaqItem[] = [
  * standing in front of three prices would ask the same thing; the emphasis here is
  * on grams, packs, price and delivery, which the homepage FAQ does not carry.
  */
+/**
+ * FAQ na /shop odgovara samo na pitanja oko IZBORA pakovanja. Sve ostalo —
+ * sastav, upotreba, upozorenja, dostava — stoji na stranicama proizvoda, pa se
+ * isti tekst ne pojavljuje na četiri mesta.
+ */
 export const SHOP_FAQ_ITEMS: { question: string; answer: string }[] = [
   {
-    question: "Šta je Med za potenciju?",
+    question: "Koja je razlika između pakovanja?",
     answer:
-      "Med za potenciju je dodatak ishrani na bazi meda i biljnih sastojaka. Q4You Fortissimo dolazi u praktičnim kesicama od 7 g.",
+      "Sastav i količina po kesici (7 g) isti su u sva tri pakovanja — razlikuje se samo broj kesica i cena po kesici. Veće pakovanje ima nižu cenu po kesici.",
   },
   {
-    question: "Koliko grama ima jedna kesica?",
-    answer: "Jedna kesica sadrži 7 g proizvoda.",
-  },
-  {
-    question: "Koja pakovanja su dostupna?",
+    question: "Koje pakovanje da izaberem ako prvi put naručujem?",
     answer:
-      "Dostupna su pakovanja od 1 kesice (7 g), 3 kesice (21 g) i 7 kesica (49 g).",
+      "Za prvo isprobavanje je dovoljna jedna kesica. Veće pakovanje, sa nižom cenom po kesici, možete naručiti kasnije.",
   },
   {
-    question: "Koliko košta Med za potenciju?",
+    question: "Da li mogu da kombinujem pakovanja u jednoj porudžbini?",
     answer:
-      "Cena zavisi od izabranog pakovanja: 1 kesica je 500 din, 3 kesice 990 din, a 7 kesica 1.960 din. Dostava se dodatno naplaćuje 535 din.",
+      "Da. U korpu možete dodati više različitih pakovanja i poručiti ih zajedno, uz jednu dostavu.",
   },
   {
-    question: "Kako se koristi?",
+    question: "Koliko traje isporuka i kako se plaća?",
     answer:
-      "Proizvod se koristi prema uputstvu i deklaraciji proizvođača. Sadržaj jedne kesice iscedite direktno u usta ili ga stavite na kašičicu i pojedite, na prazan stomak ili najmanje dva sata nakon obroka.",
-  },
-  {
-    question: "Da li je Med za potenciju lek?",
-    answer:
-      "Ne. Q4You Fortissimo je dodatak ishrani i nije zamena za lek, medicinsku terapiju ili savet lekara.",
-  },
-  {
-    question: "Ko ne treba da koristi proizvod?",
-    answer:
-      "Proizvod nije namenjen osobama mlađim od 18 godina, trudnicama i dojiljama, i ne treba ga koristiti ako ste alergični na neki od sastojaka. Osobe koje koriste terapiju ili imaju zdravstvene tegobe treba da se pre upotrebe konsultuju sa lekarom ili farmaceutom.",
-  },
-  {
-    question: "Da li mogu da platim pouzećem?",
-    answer:
-      "Da. Plaćanje je isključivo pouzećem — paket plaćate kuriru prilikom preuzimanja, bez plaćanja unapred.",
-  },
-  {
-    question: "Da li je isporuka diskretna?",
-    answer: "Da. Proizvod se šalje u diskretnom, neutralnom pakovanju.",
-  },
-  {
-    question: "Koliko košta dostava?",
-    answer:
-      "Trenutno navedena cena dostave je 535 din, a isporuka je u roku od 24 časa.",
-  },
-  {
-    question: "Kako mogu da poručim?",
-    answer:
-      "Izaberite željeno pakovanje, kliknite na „Dodaj u korpu“ i završite porudžbinu. Poručivanje je moguće i telefonom, svakog dana od 10 do 20 časova.",
+      "Isporuka je u roku od 24 časa, a plaćanje isključivo pouzećem — kuriru prilikom preuzimanja paketa.",
   },
 ];
 
-/** FAQ for the product landing page — phrased around the product itself. */
 export const PRODUCT_FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: "Šta je Med za potenciju Q4You Fortissimo?",
