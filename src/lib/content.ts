@@ -84,9 +84,13 @@ export async function findPostBySlug(slug: string) {
   return {
     slug,
     title: entry.title,
+    seoTitle: entry.seoTitle || undefined,
     excerpt: entry.excerpt,
     category: entry.category,
     date: formatDate(entry.date),
+    isoDate: entry.date,
+    updated: entry.updated ? formatDate(entry.updated) : undefined,
+    isoUpdated: entry.updated ?? undefined,
     readTime: entry.readTime,
     author: entry.author,
     image: entry.image ?? undefined,
@@ -97,6 +101,18 @@ export async function findPostBySlug(slug: string) {
 
 export async function getPostSlugs(): Promise<string[]> {
   return [...(await reader.collections.posts.list())];
+}
+
+/**
+ * Za sitemap: poslednja izmena je datum izmene ako postoji, inače datum objave.
+ * Tako Google vidi kada je tekst osvežen, bez ručnog održavanja posebne liste.
+ */
+export async function getPostDates(): Promise<{ slug: string; lastModified: string }[]> {
+  const entries = await reader.collections.posts.all();
+  return entries.map(({ slug, entry }) => ({
+    slug,
+    lastModified: entry.updated ?? entry.date,
+  }));
 }
 
 export async function getProductSlugs(): Promise<string[]> {

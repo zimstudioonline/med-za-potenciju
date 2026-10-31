@@ -176,6 +176,43 @@ export function faqPageSchema(items: { question: string; answer: string }[]) {
   };
 }
 
+/**
+ * Blog tekst. Datumi su ISO ("2026-10-31"), isti koji stoje u CMS-u, a
+ * `dateModified` pada na datum objave dok tekst nije menjan — Google traži oba.
+ * Autor "Med za potenciju" je sam sajt, pa se tada upućuje na organizaciju
+ * umesto da se pravi osoba koja ne postoji.
+ */
+export function blogPostingSchema(post: {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  isoDate: string;
+  isoUpdated?: string;
+  author: string;
+  image?: string;
+}) {
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  return {
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.excerpt,
+    url,
+    mainEntityOfPage: url,
+    datePublished: post.isoDate,
+    dateModified: post.isoUpdated ?? post.isoDate,
+    inLanguage: "sr-RS",
+    articleSection: post.category,
+    image: post.image ? `${SITE_URL}${post.image}` : undefined,
+    author:
+      post.author === "Med za potenciju"
+        ? { "@id": ORGANIZATION_ID }
+        : { "@type": "Person", name: post.author },
+    publisher: { "@id": ORGANIZATION_ID },
+  };
+}
+
 /** Sve u jednom `@graph`, da stranica ima jedan `<script>` umesto pet. */
 export function graph(nodes: object[]) {
   return { "@context": "https://schema.org", "@graph": nodes };

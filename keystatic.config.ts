@@ -63,10 +63,21 @@ export default config({
           options: CATEGORY_OPTIONS,
           defaultValue: "Potencija i erekcija",
         }),
+        seoTitle: fields.text({
+          label: "SEO naslov (opciono)",
+          description:
+            "Ceo naslov u rezultatima pretrage, do 60 znakova, bez dodatka „| Med za potenciju”. Ako je prazno, koristi se naslov teksta sa tim dodatkom.",
+          validation: { length: { max: 60 } },
+        }),
         date: fields.date({
           label: "Datum objave",
           description: "Prikazuje se na kartici.",
           validation: { isRequired: true },
+        }),
+        updated: fields.date({
+          label: "Datum poslednje izmene (opciono)",
+          description:
+            "Popunite samo kada se sadržaj teksta suštinski promeni, ne za ispravku zareza. Prikazuje se uz datum objave i ide u sitemap i strukturirane podatke.",
         }),
         readTime: fields.text({
           label: "Vreme čitanja",

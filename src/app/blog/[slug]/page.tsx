@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { JsonLd } from "@/components/json-ld";
 import { PostBody } from "@/components/post-body";
 import { findPostBySlug, getPostSlugs } from "@/lib/content";
+import { blogPostingSchema, breadcrumbSchema, graph, organizationSchema } from "@/lib/schema";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -24,14 +26,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: post.title,
+    // SEO naslov, ako postoji, ide ceo i bez " | Med za potenciju" (absolute),
+    // da title tag ostane u 60 znakova koje Google prikazuje.
+    title: post.seoTitle ? { absolute: post.seoTitle } : post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
       title: post.title,
       description: post.excerpt,
-      publishedTime: post.date,
+      // ISO datumi: Open Graph ne razume prikazani format "31.10.2026."
+      publishedTime: post.isoDate,
+      modifiedTime: post.isoUpdated,
       authors: [post.author],
       images: post.image ? [post.image] : undefined,
     },
@@ -48,6 +54,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd
+        data={graph([
+          organizationSchema,
+          blogPostingSchema(post),
+          breadcrumbSchema([
+            { name: "Početna", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ])}
+      />
       <Header />
 
       <article className="mx-auto max-w-4xl px-6 pb-20 pt-8">
@@ -62,6 +79,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span>{post.category}</span>
           <span>•</span>
           <span>{post.date}</span>
+          {post.updated && (
+            <>
+              <span>•</span>
+              <span>Ažurirano {post.updated}</span>
+            </>
+          )}
           <span>•</span>
           <span>{post.readTime}</span>
         </div>

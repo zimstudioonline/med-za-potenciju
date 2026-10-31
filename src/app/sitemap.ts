@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getPostSlugs, getProductSlugs } from "@/lib/content";
+import { getPostDates, getProductSlugs } from "@/lib/content";
 
 const BASE_URL = "https://medzapotenciju.com";
 
@@ -12,7 +12,7 @@ const BASE_URL = "https://medzapotenciju.com";
  * pretrage i već su označeni sa noindex.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [postSlugs, productSlugs] = await Promise.all([getPostSlugs(), getProductSlugs()]);
+  const [posts, productSlugs] = await Promise.all([getPostDates(), getProductSlugs()]);
 
   return [
     { url: BASE_URL, changeFrequency: "monthly", priority: 1 },
@@ -28,8 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
-    ...postSlugs.map((slug) => ({
+    ...posts.map(({ slug, lastModified }) => ({
       url: `${BASE_URL}/blog/${slug}`,
+      lastModified,
       changeFrequency: "yearly" as const,
       priority: 0.6,
     })),
