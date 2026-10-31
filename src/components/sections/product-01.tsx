@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "motion/react"
 import {
-  Heart,
+  Check,
   Minus,
   Plus,
   RotateCcw,
@@ -15,6 +16,7 @@ import {
 
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
+import { useCart } from "@/lib/cart-context"
 import { formatMoney } from "@/lib/money"
 import { fadeUp, stagger, viewport } from "@/lib/motion"
 import { cn } from "@/lib/utils"
@@ -40,10 +42,11 @@ export type Product01Labels = {
   freeShipping: string
   returns: string
   secureCheckout: string
-  /** Accessible labels for the quantity stepper and wishlist button. */
+  /** Accessible labels for the quantity stepper. */
   decreaseQuantity: string
   increaseQuantity: string
-  addToWishlist: string
+  /** Shown on the add-to-cart button for a moment after adding. */
+  added: string
 }
 
 export const defaultProduct01Labels: Product01Labels = {
@@ -58,10 +61,12 @@ export const defaultProduct01Labels: Product01Labels = {
   secureCheckout: "Secure checkout",
   decreaseQuantity: "Decrease quantity",
   increaseQuantity: "Increase quantity",
-  addToWishlist: "Add to wishlist",
+  added: "Added",
 }
 
 export type Product01Props = {
+  /** Cart slug: "add to cart" adds the chosen quantity, "buy now" also goes to checkout. */
+  slug: string
   brand?: string
   title?: string
   price?: number
@@ -106,6 +111,7 @@ const swatchFallbacks = [
 ]
 
 export function Product01({
+  slug,
   brand = "Atelier North",
   title = "Merino Wool Overshirt",
   price = 148,
@@ -133,6 +139,16 @@ export function Product01({
     sizes.length > 2 ? 2 : 0
   )
   const [qty, setQty] = React.useState(1)
+  const [added, setAdded] = React.useState(false)
+  const { lines, add, setQty: setCartQty } = useCart()
+  const router = useRouter()
+
+  // Potvrda "Dodato" se sama vraća na običan natpis, bez tajmera posle unmount-a.
+  React.useEffect(() => {
+    if (!added) return
+    const timer = window.setTimeout(() => setAdded(false), 2000)
+    return () => window.clearTimeout(timer)
+  }, [added])
 
   const filledStars = Math.round(rating)
   const hasImages = images && images.length > 0
@@ -364,7 +380,7 @@ export function Product01({
                 </span>
                 <button
                   type="button"
-                  onClick={() => setQty((q) => q + 1)}
+                  onClick={() => setQty((q) => Math.min(99, q + 1))}
                   aria-label={t.increaseQuantity}
                   className="flex size-10 items-center justify-center rounded-r-md text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
                 >
@@ -376,37 +392,39 @@ export function Product01({
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <a
-                href="#add-to-cart"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "flex-1 gap-2"
-                )}
-              >
+            <button
+              type="button"
+              onClick={() => {
+                add(slug, qty)
+                setAdded(true)
+              }}
+              className={cn(buttonVariants({ size: "lg" }), "w-full gap-2")}
+            >
+              {added ? (
+                <Check className="size-4" />
+              ) : (
                 <ShoppingBag className="size-4" />
-                {addToCartLabel}
-              </a>
-              <button
-                type="button"
-                aria-label={t.addToWishlist}
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "icon-lg" })
-                )}
-              >
-                <Heart className="size-4" />
-              </button>
-            </div>
+              )}
+              <span aria-live="polite">{added ? t.added : addToCartLabel}</span>
+            </button>
 
-            <a
-              href="#buy-now"
+            <button
+              type="button"
+              onClick={() => {
+                // Ako je kupac već kliknuo "Dodaj u korpu", ne dodajemo isto
+                // još jednom, samo obezbeđujemo izabranu količinu.
+                const inCart = lines.find((line) => line.slug === slug)
+                if (inCart) setCartQty(slug, Math.max(inCart.qty, qty))
+                else add(slug, qty)
+                router.push("/checkout")
+              }}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "w-full"
               )}
             >
               {buyNowLabel}
-            </a>
+            </button>
           </div>
 
           {/* Trust row */}

@@ -98,6 +98,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <MotionProvider>
         <Product01
+          slug={product.slug}
           brand="Q4You"
           title={product.name}
           price={product.price}
@@ -121,7 +122,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             secureCheckout: "Sigurno plaćanje",
             decreaseQuantity: "Umanji količinu",
             increaseQuantity: "Uvećaj količinu",
-            addToWishlist: "Dodaj na listu želja",
+            added: "Dodato u korpu",
           }}
         />
 
