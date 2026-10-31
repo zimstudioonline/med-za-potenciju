@@ -447,7 +447,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     group: "porucivanje",
     question: "Kako mogu da poručim?",
     answer:
-      "Poručivanje ide preko sajta, bez registracije, ili telefonom na +381 63 342 3800 svakog dana od 10 do 20 časova.",
+      "Poručivanje ide preko sajta, bez registracije, ili telefonom na +381 63 342 380 svakog dana od 10 do 20 časova.",
   },
   {
     group: "porucivanje",
@@ -553,6 +553,6 @@ export const PRODUCT_FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: "Kako mogu da poručim?",
     answer:
-      "Izaberite željeno pakovanje, kliknite na „Dodaj u korpu“ i završite porudžbinu. Za dodatna pitanja možete pozvati +381 63 342 3800, svakog dana od 10 do 20 časova.",
+      "Izaberite željeno pakovanje, kliknite na „Dodaj u korpu“ i završite porudžbinu. Za dodatna pitanja možete pozvati +381 63 342 380, svakog dana od 10 do 20 časova.",
   },
 ];

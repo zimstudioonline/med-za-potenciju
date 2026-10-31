@@ -160,7 +160,7 @@ export async function placeOrder(
 
     return {
       status: "error",
-      message: `${reason} Pozovite nas na +381 63 342 3800 (10–20h) da porudžbinu završimo telefonom.`,
+      message: `${reason} Pozovite nas na +381 63 342 380 (10–20h) da porudžbinu završimo telefonom.`,
       orderRef,
     };
   }

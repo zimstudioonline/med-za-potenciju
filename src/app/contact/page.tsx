@@ -9,7 +9,7 @@ import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Pitanja o proizvodu, porudžbini ili dostavi? Pišite na kontakt@medzapotenciju.com ili nas pozovite na +381 63 342 3800, svakog dana od 10 do 20 časova.",
+    "Pitanja o proizvodu, porudžbini ili dostavi? Pišite na kontakt@medzapotenciju.com ili nas pozovite na +381 63 342 380, svakog dana od 10 do 20 časova.",
   alternates: { canonical: "/contact" },
 };
 
