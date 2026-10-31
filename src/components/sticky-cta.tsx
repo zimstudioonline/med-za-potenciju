@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { CartIcon, PhoneIcon } from "@/components/icons";
-import { PHONE_HREF } from "@/lib/contact";
+import { CartIcon, WhatsAppIcon } from "@/components/icons";
+import { WHATSAPP_HREF } from "@/lib/contact";
 import { useCart } from "@/lib/cart-context";
 import { formatMoney } from "@/lib/money";
 
@@ -15,8 +15,8 @@ import { formatMoney } from "@/lib/money";
 const HIDDEN_ON = ["/cart", "/checkout"];
 
 /**
- * Mobilna traka na dnu ekrana: poručivanje kao glavna akcija, telefon kao izlaz
- * za nedoumice. Na desktopu je ne prikazujemo — tamo je sticky header sa korpom
+ * Mobilna traka na dnu ekrana: poručivanje kao glavna akcija, WhatsApp pored
+ * njega. Telefon i Viber su u plutajućoj dugmadi iznad trake (FloatingContact). Na desktopu je ne prikazujemo — tamo je sticky header sa korpom
  * uvek vidljiv, a `tel:` link na računaru najčešće ne radi ništa.
  */
 export function StickyCta() {
@@ -50,11 +50,13 @@ export function StickyCta() {
           </Link>
 
           <a
-            href={PHONE_HREF}
-            aria-label="Pozovi i poruči telefonom"
-            className="flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-card text-foreground transition duration-200 hover:border-primary hover:text-primary active:scale-[0.98]"
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Pišite nam na WhatsApp"
+            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-sm transition duration-200 hover:opacity-90 active:scale-[0.98]"
           >
-            <PhoneIcon />
+            <WhatsAppIcon className="size-6" />
           </a>
         </div>
       </div>

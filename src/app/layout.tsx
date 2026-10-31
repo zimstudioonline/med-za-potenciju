@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 
 import { CookieConsent } from "@/components/cookie-consent";
+import { FloatingContact } from "@/components/floating-contact";
 import { StickyCta } from "@/components/sticky-cta";
 import { CartProvider } from "@/lib/cart-context";
 import { getProducts } from "@/lib/content";
@@ -62,6 +63,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider products={products}>
           {children}
           <StickyCta />
+          <FloatingContact />
           <CookieConsent />
         </CartProvider>
       </body>

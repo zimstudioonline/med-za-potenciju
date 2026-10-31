@@ -41,3 +41,59 @@ export function PhoneIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
+
+export function MailIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-10 6L2 7" />
+    </svg>
+  );
+}
+
+/** Oblačić sa slušalicom — prepoznatljiv za WhatsApp, a crta se istim potezom kao ostale ikone. */
+export function WhatsAppIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 21l1.65-3.8A9 9 0 1 1 7.8 20.3L3 21Z" />
+      <path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2L9 9.5Z" />
+    </svg>
+  );
+}
+
+export function ViberIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 2c5 0 9 2.5 9 8.5S17 19 12 19h-1l-3 3v-3.4C4.5 17.4 3 14.6 3 10.5 3 4.5 7 2 12 2Z" />
+      <path d="M9.5 7.5c0 3.5 2 5.5 5 5.5l.8-1.3-1.6-.9-.8.6a3.4 3.4 0 0 1-1.5-1.5l.6-.8-.9-1.6-1.6 0Z" />
+      <path d="M13 6.5a3 3 0 0 1 2.5 2.5" />
+    </svg>
+  );
+}

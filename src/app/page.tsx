@@ -7,6 +7,7 @@ import { Faq } from "@/components/home/faq";
 import { Hero } from "@/components/home/hero";
 import { CartIcon } from "@/components/icons";
 import { Packages } from "@/components/home/packages";
+import { ShareRecommendation } from "@/components/home/share-recommendation";
 import { JsonLd } from "@/components/json-ld";
 import { getPosts, getProducts } from "@/lib/content";
 import {
@@ -353,6 +354,9 @@ export default async function Home() {
 
       {/* 11 — FAQ */}
       <Faq />
+
+      {/* 11b — Preporuka prijatelju */}
+      <ShareRecommendation />
 
       {/* 12 — Closing CTA. No invented reviews; an open phone line instead. */}
       <section className="border-y border-border bg-muted/30 py-16">
