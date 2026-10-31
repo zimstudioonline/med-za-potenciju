@@ -1,5 +1,6 @@
 import { SITE_URL } from "@/lib/schema";
 import { MailIcon, ViberIcon, WhatsAppIcon } from "@/components/icons";
+import { ViberShareButton } from "@/components/home/viber-share-button";
 
 /**
  * Preporuka prijatelju. Svaki taster otvara aplikaciju posetioca sa već napisanom
@@ -10,6 +11,9 @@ const SHARE_SUBJECT = "Preporuka: Med za potenciju";
 const SHARE_TEXT = `Pogledaj ovaj sajt — sastav, način upotrebe i cene Meda za potenciju na jednom mestu. Dostava je diskretna, plaćanje pouzećem: ${SITE_URL}`;
 
 const encoded = encodeURIComponent(SHARE_TEXT);
+
+const BUTTON =
+  "inline-flex items-center justify-center gap-3 rounded-2xl px-7 py-4 text-base font-bold transition duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0";
 
 const CHANNELS = [
   {
@@ -24,12 +28,6 @@ const CHANNELS = [
     className: "bg-[#25D366] text-white",
     Icon: WhatsAppIcon,
     external: true,
-  },
-  {
-    label: "Pošalji na Viber",
-    href: `viber://forward?text=${encoded}`,
-    className: "bg-[#7360F2] text-white",
-    Icon: ViberIcon,
   },
 ];
 
@@ -65,12 +63,16 @@ export function ShareRecommendation() {
               key={label}
               href={href}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className={`inline-flex items-center justify-center gap-3 rounded-2xl px-7 py-4 text-base font-bold transition duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0 ${className}`}
+              className={`${BUTTON} ${className}`}
             >
               <Icon />
               {label}
             </a>
           ))}
+          <ViberShareButton text={SHARE_TEXT} className={`${BUTTON} bg-[#7360F2] text-white`}>
+            <ViberIcon />
+            Pošalji na Viber
+          </ViberShareButton>
         </div>
 
         <p className="mx-auto mt-8 max-w-md text-sm leading-6 text-muted-foreground">
