@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { AddToCart } from "@/components/add-to-cart";
 import { FaqAccordion } from "@/components/faq-accordion";
+import { ShareRecommendation } from "@/components/home/share-recommendation";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { CartIcon, PhoneIcon } from "@/components/icons";
@@ -602,6 +603,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </Reveal>
           </div>
         </section>
+
+        <ShareRecommendation
+          product={{ name: product.name, path: `/shop/${product.slug}` }}
+        />
       </MotionProvider>
 
       <section className="mx-auto max-w-6xl px-6 py-16">

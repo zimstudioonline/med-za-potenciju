@@ -7,31 +7,50 @@ import { ViberShareButton } from "@/components/home/viber-share-button";
  * porukom, pa nema forme, servera ni prikupljanja tuđih adresa. Tekst je namerno
  * neutralan — primalac vidi samo link i šta na sajtu može da pročita.
  */
-const SHARE_SUBJECT = "Preporuka: Med za potenciju";
-const SHARE_TEXT = `Pogledaj ovaj sajt — sastav, način upotrebe i cene Meda za potenciju na jednom mestu. Dostava je diskretna, plaćanje pouzećem: ${SITE_URL}`;
-
-const encoded = encodeURIComponent(SHARE_TEXT);
-
 const BUTTON =
   "inline-flex items-center justify-center gap-3 rounded-2xl px-7 py-4 text-base font-bold transition duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg active:translate-y-0";
 
-const CHANNELS = [
-  {
-    label: "Pošalji mejlom",
-    href: `mailto:?subject=${encodeURIComponent(SHARE_SUBJECT)}&body=${encoded}`,
-    className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
-    Icon: MailIcon,
-  },
-  {
-    label: "Pošalji na WhatsApp",
-    href: `https://wa.me/?text=${encoded}`,
-    className: "bg-[#25D366] text-white",
-    Icon: WhatsAppIcon,
-    external: true,
-  },
-];
+/**
+ * Bez `product` preporučuje se ceo sajt (početna). Sa `product` poruka nosi
+ * naziv i link baš tog pakovanja, pa primalac stiže pravo na stranicu proizvoda.
+ */
+type ShareRecommendationProps = {
+  product?: { name: string; path: string };
+};
 
-export function ShareRecommendation() {
+function shareContent(product?: ShareRecommendationProps["product"]) {
+  if (!product) {
+    return {
+      subject: "Preporuka: Med za potenciju",
+      text: `Pogledaj ovaj sajt — sastav, način upotrebe i cene Meda za potenciju na jednom mestu. Dostava je diskretna, plaćanje pouzećem: ${SITE_URL}`,
+    };
+  }
+  return {
+    subject: `Preporuka: ${product.name}`,
+    // Naziv već sadrži crtu ("Q4You Fortissimo — 3 kesice"), pa ide u svoju rečenicu.
+    text: `Pogledaj ovo: ${product.name}. Sastav, način upotrebe i cena su na jednom mestu, dostava je diskretna, a plaćanje pouzećem: ${SITE_URL}${product.path}`,
+  };
+}
+
+export function ShareRecommendation({ product }: ShareRecommendationProps) {
+  const { subject, text } = shareContent(product);
+  const encoded = encodeURIComponent(text);
+  const channels = [
+    {
+      label: "Pošalji mejlom",
+      href: `mailto:?subject=${encodeURIComponent(subject)}&body=${encoded}`,
+      className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
+      Icon: MailIcon,
+    },
+    {
+      label: "Pošalji na WhatsApp",
+      href: `https://wa.me/?text=${encoded}`,
+      className: "bg-[#25D366] text-white",
+      Icon: WhatsAppIcon,
+      external: true,
+    },
+  ];
+
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
       <div className="relative overflow-hidden rounded-[28px] border border-primary/20 bg-gradient-to-br from-primary/10 via-card to-card px-6 py-14 text-center shadow-sm md:px-12">
@@ -52,13 +71,13 @@ export function ShareRecommendation() {
           <span className="mt-1 block text-primary">Pošaljite mu link, diskretno.</span>
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-          Prosledite prijatelju naš sajt, gde na jednom mestu može da pročita sastav, način
-          upotrebe i cene Meda za potenciju. Ne morate ništa da objašnjavate, dovoljna je jedna
-          poruka.
+          {product
+            ? "Prosledite prijatelju ovu stranicu, gde na jednom mestu može da pročita sastav, način upotrebe i cenu. Ne morate ništa da objašnjavate, dovoljna je jedna poruka."
+            : "Prosledite prijatelju naš sajt, gde na jednom mestu može da pročita sastav, način upotrebe i cene Meda za potenciju. Ne morate ništa da objašnjavate, dovoljna je jedna poruka."}
         </p>
 
         <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-          {CHANNELS.map(({ label, href, className, Icon, external }) => (
+          {channels.map(({ label, href, className, Icon, external }) => (
             <a
               key={label}
               href={href}
@@ -69,7 +88,7 @@ export function ShareRecommendation() {
               {label}
             </a>
           ))}
-          <ViberShareButton text={SHARE_TEXT} className={`${BUTTON} bg-[#7360F2] text-white`}>
+          <ViberShareButton text={text} className={`${BUTTON} bg-[#7360F2] text-white`}>
             <ViberIcon />
             Pošalji na Viber
           </ViberShareButton>
